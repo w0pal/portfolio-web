@@ -269,6 +269,15 @@ export default function Home() {
        pharetra. Integer et massa imperdiet, feugiat elit quis, vulputate dolor.
        Quisque suscipit pellentesque mattis.
       </p>
+
+      <h2
+       className={`text-2xl font-bold mb-6 ${
+        isDarkMode ? 'text-blue-200' : 'text-blue-900'
+       } animate-fade-in-up`}
+      >
+       Rencananya, aku akan memasukkan blog pribadi aku di sini. Namun, nanti
+       aja deh. Malas. Sekarang mah lorem ipsum dulu aja buat test.
+      </h2>
      </div>
     </section>
 
