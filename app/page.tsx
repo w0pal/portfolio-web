@@ -72,7 +72,7 @@ export default function Home() {
     <div className="w-full px-6 py-2 flex items-center justify-between">
      <a
       href="/"
-      className={`text-lg font-bold transition-opacity hover:opacity-70 cursor-pointer ${
+      className={`text-2xl px-2 font-bold transition-opacity hover:opacity-70 cursor-pointer ${
        isDarkMode ? 'text-white' : 'text-gray-900'
       }`}
      >
@@ -150,7 +150,7 @@ export default function Home() {
     </div>
    </header>
 
-   {/* Sidebar Menu */}
+   {/* Fullscreen Menu */}
    <div
     className={`fixed inset-0 z-40 transition-opacity duration-300 ${
      isMenuOpen
@@ -158,59 +158,66 @@ export default function Home() {
       : 'opacity-0 pointer-events-none'
     }`}
    >
-    <div
-     className="absolute inset-0 bg-black/50"
-     onClick={() => setIsMenuOpen(false)}
-    />
     <nav
-     className={`absolute right-0 top-0 h-full w-80 ${
-      isDarkMode ? 'bg-slate-700' : 'bg-white'
-     } shadow-xl overflow-y-auto`}
+     className={`absolute inset-0 ${
+      isDarkMode ? 'bg-slate-800' : 'bg-white'
+     } overflow-y-auto`}
     >
-     <div className="p-6">
+     <div className="w-full px-6 py-2 flex items-center justify-between">
+      <a
+       href="/"
+       className={`text-2xl px-2 font-bold transition-opacity hover:opacity-70 cursor-pointer ${
+        isDarkMode ? 'text-white' : 'text-gray-900'
+       }`}
+      >
+       w0pal
+      </a>
       <button
        onClick={() => setIsMenuOpen(false)}
-       className={`absolute top-6 right-6 p-2 ${
+       className={`p-2 rounded-lg ${
         isDarkMode
-         ? 'text-gray-300 hover:text-white'
-         : 'text-gray-700 hover:text-gray-900'
-       }`}
+         ? 'text-gray-300 hover:text-white hover:bg-slate-700'
+         : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+       } transition-colors`}
       >
        <X size={24} />
       </button>
+     </div>
 
-      <div className="mt-16 space-y-6">
-       <a
-        href="#tentang"
-        className={`block text-2xl ${
-         isDarkMode
-          ? 'text-gray-200 hover:text-white'
-          : 'text-gray-800 hover:text-black'
-        }`}
-       >
-        Tentang
-       </a>
-       <a
-        href="#saat-ini"
-        className={`block text-2xl ${
-         isDarkMode
-          ? 'text-gray-200 hover:text-white'
-          : 'text-gray-800 hover:text-black'
-        }`}
-       >
-        Saat ini
-       </a>
-       <a
-        href="#blog"
-        className={`block text-2xl ${
-         isDarkMode
-          ? 'text-gray-200 hover:text-white'
-          : 'text-gray-800 hover:text-black'
-        }`}
-       >
-        Blog
-       </a>
-      </div>
+     <div className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-12 space-y-3">
+      <a
+       href="#tentang"
+       onClick={() => setIsMenuOpen(false)}
+       className={`block text-2xl font-semi-bold ${
+        isDarkMode
+         ? 'text-gray-200 hover:text-white'
+         : 'text-gray-800 hover:text-black'
+       } transition-colors`}
+      >
+       Tentang
+      </a>
+      <a
+       href="#saat-ini"
+       onClick={() => setIsMenuOpen(false)}
+       className={`block text-2xl font-semi-bold ${
+        isDarkMode
+         ? 'text-gray-200 hover:text-white'
+         : 'text-gray-800 hover:text-black'
+       } transition-colors`}
+      >
+       Saat ini
+      </a>
+      <a
+       href="#blog"
+       onClick={() => setIsMenuOpen(false)}
+       className={`block text-2xl font-semi-bold ${
+        isDarkMode
+         ? 'text-gray-200 hover:text-white'
+         : 'text-gray-800 hover:text-black'
+       } transition-colors`}
+      >
+       Blog
+      </a>
      </div>
     </nav>
    </div>
@@ -220,23 +227,33 @@ export default function Home() {
     {/* Hero Section */}
     <section className="mb-1">
      <h1
-      className={`text-4xl font-bold mb-6 ${
+      className={`text-4xl font-bold mb-4 ${
        isDarkMode ? 'text-white' : 'text-gray-900'
       } animate-fade-in-up`}
      >
       Hi, I am Mohammad Naufal Maulana!
      </h1>
 
-     <div className="mb-2 space-y-4">
-      <p
+     <div className="w-full md:w-auto mb-4 animate-fade-in-up animation-delay-200">
+      <img
+       src="/profile.webp"
+       alt="Mohammad Naufal Maulana"
+       className="w-48 h-48 md:w-64 md:h-64 rounded-lg object-cover shadow-lg"
+      />
+     </div>
+
+     <div className="space-y-6">
+      <h2
        className={`${
-        isDarkMode ? 'text-gray-300' : 'text-gray-700'
-       } leading-relaxed text-lg animate-fade-in-up animation-delay-200`}
+        isDarkMode ? 'text-blue-200' : 'text-blue-900'
+       } leading-relaxed text-2xl font-bold animate-fade-in-up animation-delay-200`}
       >
-       Seorang mahasiswa informatika tingkat ketiga yang menyukai teknologi.
-       Seorang PC Enthusiast sejak 2020, dan juga pengguna Linux Desktop sejak
-       2023.
-      </p>
+       Seorang mahasiswa informatika tingkat ketiga yang menyukai teknologi dan
+       fotografi. Seorang PC Enthusiast sejak 2020, dan juga pengguna Linux
+       Desktop sejak 2023. Juga menyukai fotografi melalui media sosial, hingga
+       akhirnya menjadi hobi keduaku. Memiliki kemampuan memotret dengan genre
+       foto jalanan baik melalui kamera ataupun smartphone.
+      </h2>
 
       <p
        className={`${
@@ -272,7 +289,7 @@ export default function Home() {
 
       <h2
        className={`text-2xl font-bold mb-6 ${
-        isDarkMode ? 'text-blue-200' : 'text-blue-900'
+        isDarkMode ? 'text-orange-200' : 'text-orange-900'
        } animate-fade-in-up`}
       >
        Rencananya, aku akan memasukkan blog pribadi aku di sini. Namun, nanti
@@ -284,7 +301,7 @@ export default function Home() {
     {/* Footer */}
     <footer>
      {/* Social Media Links */}
-     <div className="flex items-start animate-fade-in-up animation-delay-400">
+     <div className="flex justify-center animate-fade-in-up animation-delay-400">
       <a
        href="https://github.com/w0pal"
        target="_blank"
