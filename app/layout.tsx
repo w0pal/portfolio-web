@@ -1,36 +1,34 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+ variable: '--font-geist-sans',
+ subsets: ['latin'],
+ weight: ['400', '500', '600', '700', '800'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+ variable: '--font-geist-mono',
+ subsets: ['latin'],
+ weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
-  title: "Mohammad Naufal Maulana - Portfolio",
-  description: "Portfolio website of Mohammad Naufal Maulana",
+ title: "w0pal's Website",
+ description: 'The personal website and blog of w0pal.',
 };
 
 export default function RootLayout({
-  children,
+ children,
 }: Readonly<{
-  children: React.ReactNode;
+ children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+ return (
+  <html lang="en">
+   <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    {children}
+   </body>
+  </html>
+ );
 }

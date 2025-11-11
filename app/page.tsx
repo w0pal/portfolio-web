@@ -10,6 +10,7 @@ import {
  Github,
  Instagram,
  Linkedin,
+ AtSign,
 } from 'lucide-react';
 
 type ThemeMode = 'system' | 'light' | 'dark';
@@ -52,12 +53,8 @@ export default function Home() {
   }
  }, [themeMode]);
 
- const cycleTheme = () => {
-  setThemeMode((prev) => {
-   if (prev === 'system') return 'light';
-   if (prev === 'light') return 'dark';
-   return 'system';
-  });
+ const setTheme = (theme: ThemeMode) => {
+  setThemeMode(theme);
  };
 
  return (
@@ -67,11 +64,15 @@ export default function Home() {
    } transition-colors duration-300`}
   >
    {/* Header */}
-   <header className="animate-fade-in">
+   <header
+    className={`sticky top-0 z-50 animate-fade-in ${
+     isDarkMode ? 'bg-slate-800' : 'bg-white'
+    } backdrop-blur-sm bg-opacity-95`}
+   >
     <div className="w-full px-6 py-2 flex items-center justify-between">
      <a
       href="/"
-      className={`text-lg font-bold ${
+      className={`text-lg font-bold transition-opacity hover:opacity-70 cursor-pointer ${
        isDarkMode ? 'text-white' : 'text-gray-900'
       }`}
      >
@@ -85,7 +86,7 @@ export default function Home() {
        } p-1`}
       >
        <button
-        onClick={cycleTheme}
+        onClick={() => setTheme('system')}
         className={`p-1.5 rounded-md transition-all ${
          themeMode === 'system'
           ? isDarkMode
@@ -101,7 +102,7 @@ export default function Home() {
         <Monitor size={18} />
        </button>
        <button
-        onClick={cycleTheme}
+        onClick={() => setTheme('light')}
         className={`p-1.5 rounded-md transition-all ${
          themeMode === 'light'
           ? isDarkMode
@@ -117,7 +118,7 @@ export default function Home() {
         <Sun size={18} />
        </button>
        <button
-        onClick={cycleTheme}
+        onClick={() => setTheme('dark')}
         className={`p-1.5 rounded-md transition-all ${
          themeMode === 'dark'
           ? isDarkMode
@@ -223,7 +224,7 @@ export default function Home() {
        isDarkMode ? 'text-white' : 'text-gray-900'
       } animate-fade-in-up`}
      >
-      Hi! I am Mohammad Naufal Maulana
+      Hi, I am Mohammad Naufal Maulana!
      </h1>
 
      <div className="mb-2 space-y-4">
@@ -232,9 +233,9 @@ export default function Home() {
         isDarkMode ? 'text-gray-300' : 'text-gray-700'
        } leading-relaxed text-lg animate-fade-in-up animation-delay-200`}
       >
-       Aku Mohammad Naufal Maulana, seorang mahasiswa informatika tingkat ketiga
-       yang menyukai teknologi. Seorang PC Enthusiast sejak 2020, dan juga
-       pengguna Linux Desktop sejak 2023.
+       Seorang mahasiswa informatika tingkat ketiga yang menyukai teknologi.
+       Seorang PC Enthusiast sejak 2020, dan juga pengguna Linux Desktop sejak
+       2023.
       </p>
 
       <p
@@ -274,7 +275,7 @@ export default function Home() {
     {/* Footer */}
     <footer>
      {/* Social Media Links */}
-     <div className="flex items-center animate-fade-in-up animation-delay-400">
+     <div className="flex items-start animate-fade-in-up animation-delay-400">
       <a
        href="https://github.com/w0pal"
        target="_blank"
@@ -300,6 +301,19 @@ export default function Home() {
        aria-label="Instagram"
       >
        <Instagram size={18} />
+      </a>
+      <a
+       href="https://threads.net/@w0pal"
+       target="_blank"
+       rel="noopener noreferrer"
+       className={`p-2 rounded-lg ${
+        isDarkMode
+         ? 'text-gray-400 hover:text-white hover:bg-slate-700'
+         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+       } transition-colors`}
+       aria-label="Threads"
+      >
+       <AtSign size={18} />
       </a>
       <a
        href="https://linkedin.com/in/w0pal"
