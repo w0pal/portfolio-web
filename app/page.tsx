@@ -1,61 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import {
- Menu,
- X,
- Moon,
- Sun,
- Monitor,
- Github,
- Instagram,
- Linkedin,
- AtSign,
-} from 'lucide-react';
-
-type ThemeMode = 'system' | 'light' | 'dark';
+import { useState } from 'react';
+import Header from './components/Header';
+import FullscreenMenu from './components/FullscreenMenu';
+import Footer from './components/Footer';
+import ThemeColorMeta from './components/ThemeColorMeta';
+import { useTheme } from './hooks/useTheme';
 
 export default function Home() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
- const [themeMode, setThemeMode] = useState<ThemeMode>('system');
- const [isDarkMode, setIsDarkMode] = useState(true);
-
- useEffect(() => {
-  // Load saved theme preference
-  const savedTheme = localStorage.getItem('theme') as ThemeMode;
-  if (savedTheme) {
-   setThemeMode(savedTheme);
-  }
- }, []);
-
- useEffect(() => {
-  // Handle theme changes
-  const updateTheme = () => {
-   if (themeMode === 'system') {
-    const systemPrefersDark = window.matchMedia(
-     '(prefers-color-scheme: dark)'
-    ).matches;
-    setIsDarkMode(systemPrefersDark);
-   } else {
-    setIsDarkMode(themeMode === 'dark');
-   }
-  };
-
-  updateTheme();
-  localStorage.setItem('theme', themeMode);
-
-  // Listen for system theme changes when in system mode
-  if (themeMode === 'system') {
-   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-   const handler = () => updateTheme();
-   mediaQuery.addEventListener('change', handler);
-   return () => mediaQuery.removeEventListener('change', handler);
-  }
- }, [themeMode]);
-
- const setTheme = (theme: ThemeMode) => {
-  setThemeMode(theme);
- };
+ const { themeMode, isDarkMode, setTheme } = useTheme();
 
  return (
   <div
@@ -63,165 +17,19 @@ export default function Home() {
     isDarkMode ? 'bg-slate-800' : 'bg-white'
    } transition-colors duration-300`}
   >
-   {/* Header */}
-   <header
-    className={`sticky top-0 z-50 animate-fade-in ${
-     isDarkMode ? 'bg-slate-800' : 'bg-white'
-    } backdrop-blur-sm bg-opacity-95`}
-   >
-    <div className="w-full px-6 py-2 flex items-center justify-between">
-     <a
-      href="/"
-      className={`text-2xl px-2 font-bold transition-opacity hover:opacity-70 cursor-pointer ${
-       isDarkMode ? 'text-white' : 'text-gray-900'
-      }`}
-     >
-      w0pal
-     </a>
-     <div className="flex items-center gap-3">
-      {/* Theme Toggle */}
-      <div
-       className={`flex items-center rounded-lg ${
-        isDarkMode ? 'bg-slate-700' : 'bg-gray-100'
-       } p-1`}
-      >
-       <button
-        onClick={() => setTheme('system')}
-        className={`p-1.5 rounded-md transition-all ${
-         themeMode === 'system'
-          ? isDarkMode
-            ? 'bg-slate-600 text-white'
-            : 'bg-white text-gray-900 shadow-sm'
-          : isDarkMode
-          ? 'text-gray-400 hover:text-gray-300'
-          : 'text-gray-500 hover:text-gray-700'
-        }`}
-        aria-label="System theme"
-        title="System"
-       >
-        <Monitor size={18} />
-       </button>
-       <button
-        onClick={() => setTheme('light')}
-        className={`p-1.5 rounded-md transition-all ${
-         themeMode === 'light'
-          ? isDarkMode
-            ? 'bg-slate-600 text-white'
-            : 'bg-white text-gray-900 shadow-sm'
-          : isDarkMode
-          ? 'text-gray-400 hover:text-gray-300'
-          : 'text-gray-500 hover:text-gray-700'
-        }`}
-        aria-label="Light theme"
-        title="Light"
-       >
-        <Sun size={18} />
-       </button>
-       <button
-        onClick={() => setTheme('dark')}
-        className={`p-1.5 rounded-md transition-all ${
-         themeMode === 'dark'
-          ? isDarkMode
-            ? 'bg-slate-600 text-white'
-            : 'bg-white text-gray-900 shadow-sm'
-          : isDarkMode
-          ? 'text-gray-400 hover:text-gray-300'
-          : 'text-gray-500 hover:text-gray-700'
-        }`}
-        aria-label="Dark theme"
-        title="Dark"
-       >
-        <Moon size={18} />
-       </button>
-      </div>
-
-      {/* Menu Button */}
-      <button
-       onClick={() => setIsMenuOpen(!isMenuOpen)}
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-300 hover:text-white hover:bg-slate-700'
-         : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-      >
-       {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-     </div>
-    </div>
-   </header>
-
-   {/* Fullscreen Menu */}
-   <div
-    className={`fixed inset-0 z-40 transition-opacity duration-300 ${
-     isMenuOpen
-      ? 'opacity-100 pointer-events-auto'
-      : 'opacity-0 pointer-events-none'
-    }`}
-   >
-    <nav
-     className={`absolute inset-0 ${
-      isDarkMode ? 'bg-slate-800' : 'bg-white'
-     } overflow-y-auto`}
-    >
-     <div className="w-full px-6 py-2 flex items-center justify-between">
-      <a
-       href="/"
-       className={`text-2xl px-2 font-bold transition-opacity hover:opacity-70 cursor-pointer ${
-        isDarkMode ? 'text-white' : 'text-gray-900'
-       }`}
-      >
-       w0pal
-      </a>
-      <button
-       onClick={() => setIsMenuOpen(false)}
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-300 hover:text-white hover:bg-slate-700'
-         : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-      >
-       <X size={24} />
-      </button>
-     </div>
-
-     <div className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-12 space-y-3">
-      <a
-       href="#tentang"
-       onClick={() => setIsMenuOpen(false)}
-       className={`block text-2xl font-semi-bold ${
-        isDarkMode
-         ? 'text-gray-200 hover:text-white'
-         : 'text-gray-800 hover:text-black'
-       } transition-colors`}
-      >
-       Tentang
-      </a>
-      <a
-       href="#saat-ini"
-       onClick={() => setIsMenuOpen(false)}
-       className={`block text-2xl font-semi-bold ${
-        isDarkMode
-         ? 'text-gray-200 hover:text-white'
-         : 'text-gray-800 hover:text-black'
-       } transition-colors`}
-      >
-       Saat ini
-      </a>
-      <a
-       href="#blog"
-       onClick={() => setIsMenuOpen(false)}
-       className={`block text-2xl font-semi-bold ${
-        isDarkMode
-         ? 'text-gray-200 hover:text-white'
-         : 'text-gray-800 hover:text-black'
-       } transition-colors`}
-      >
-       Blog
-      </a>
-     </div>
-    </nav>
-   </div>
-
+   <ThemeColorMeta isDarkMode={isDarkMode} />
+   <Header
+    isDarkMode={isDarkMode}
+    themeMode={themeMode}
+    setTheme={setTheme}
+    isMenuOpen={isMenuOpen}
+    setIsMenuOpen={setIsMenuOpen}
+   />
+   <FullscreenMenu
+    isDarkMode={isDarkMode}
+    isMenuOpen={isMenuOpen}
+    setIsMenuOpen={setIsMenuOpen}
+   />{' '}
    {/* Main Content */}
    <main className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-6">
     {/* Hero Section */}
@@ -298,64 +106,7 @@ export default function Home() {
      </div>
     </section>
 
-    {/* Footer */}
-    <footer>
-     {/* Social Media Links */}
-     <div className="flex justify-center animate-fade-in-up animation-delay-400">
-      <a
-       href="https://github.com/w0pal"
-       target="_blank"
-       rel="noopener noreferrer"
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-400 hover:text-white hover:bg-slate-700'
-         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-       aria-label="GitHub"
-      >
-       <Github size={18} />
-      </a>
-      <a
-       href="https://instagram.com/w0pal"
-       target="_blank"
-       rel="noopener noreferrer"
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-400 hover:text-white hover:bg-slate-700'
-         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-       aria-label="Instagram"
-      >
-       <Instagram size={18} />
-      </a>
-      <a
-       href="https://threads.net/@w0pal"
-       target="_blank"
-       rel="noopener noreferrer"
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-400 hover:text-white hover:bg-slate-700'
-         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-       aria-label="Threads"
-      >
-       <AtSign size={18} />
-      </a>
-      <a
-       href="https://linkedin.com/in/w0pal"
-       target="_blank"
-       rel="noopener noreferrer"
-       className={`p-2 rounded-lg ${
-        isDarkMode
-         ? 'text-gray-400 hover:text-white hover:bg-slate-700'
-         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-       } transition-colors`}
-       aria-label="LinkedIn"
-      >
-       <Linkedin size={18} />
-      </a>
-     </div>
-    </footer>
+    <Footer isDarkMode={isDarkMode} />
    </main>
   </div>
  );
