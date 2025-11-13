@@ -35,9 +35,8 @@ export default function Home() {
     {/* Hero Section */}
     <section className="mb-1">
      <h1
-      className={`text-4xl font-bold mb-4 ${
-       isDarkMode ? 'text-white' : 'text-gray-900'
-      } animate-fade-in-up`}
+      className="text-4xl font-bold mb-4 animate-fade-in-up"
+      style={{ color: isDarkMode ? '#F8F9FA' : '#1F2937' }}
      >
       Hi, I am Mohammad Naufal Maulana!
      </h1>
@@ -52,9 +51,8 @@ export default function Home() {
 
      <div className="space-y-6">
       <h2
-       className={`${
-        isDarkMode ? 'text-blue-200' : 'text-blue-900'
-       } leading-relaxed text-2xl font-bold animate-fade-in-up animation-delay-200`}
+       className="leading-relaxed text-2xl font-semibold animate-fade-in-up animation-delay-200"
+       style={{ color: isDarkMode ? '#c2f0fc' : '#1F2937' }}
       >
        Seorang mahasiswa informatika tingkat ketiga yang menyukai teknologi dan
        fotografi. Seorang PC Enthusiast sejak 2020, dan juga pengguna Linux
@@ -64,9 +62,8 @@ export default function Home() {
       </h2>
 
       <p
-       className={`${
-        isDarkMode ? 'text-gray-300' : 'text-gray-700'
-       } leading-relaxed text-lg animate-fade-in-up animation-delay-300`}
+       className="leading-relaxed text-lg font-normal animate-fade-in-up animation-delay-300"
+       style={{ color: isDarkMode ? '#FFFFFF' : '#000000' }}
       >
        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere
        rhoncus mauris et viverra. Vestibulum metus est, gravida a orci ut,
@@ -83,9 +80,8 @@ export default function Home() {
       </p>
 
       <p
-       className={`${
-        isDarkMode ? 'text-gray-300' : 'text-gray-700'
-       } leading-relaxed text-lg animate-fade-in-up animation-delay-400`}
+       className="leading-relaxed text-lg font-normal animate-fade-in-up animation-delay-400"
+       style={{ color: isDarkMode ? '#FFFFFF' : '#000000' }}
       >
        Aliquam aliquam, massa vel molestie laoreet, metus leo faucibus leo, non
        ornare magna justo dapibus enim. Curabitur efficitur in neque quis
@@ -96,9 +92,8 @@ export default function Home() {
       </p>
 
       <h2
-       className={`text-2xl font-bold mb-6 ${
-        isDarkMode ? 'text-orange-200' : 'text-orange-900'
-       } animate-fade-in-up`}
+       className="text-2xl font-semibold mb-6 animate-fade-in-up"
+       style={{ color: isDarkMode ? '#c2f0fc' : '#1F2937' }}
       >
        Rencananya, aku akan memasukkan blog pribadi aku di sini. Namun, nanti
        aja deh. Malas. Sekarang mah lorem ipsum dulu aja buat test.
