@@ -96,7 +96,9 @@ export default function Home() {
        style={{ color: isDarkMode ? '#c2f0fc' : '#1F2937' }}
       >
        Rencananya, aku akan memasukkan blog pribadi aku di sini. Namun, nanti
-       aja deh. Malas. Sekarang mah lorem ipsum dulu aja buat test.
+       aja deh. Malas. Sekarang mah lorem ipsum dulu aja buat test. Oh iya,
+       template warna ini akan aku jadikan 'base' untuk website ini kedepannya,
+       sebelum aku menambahkan fitur lainnya. So, this is it!
       </h2>
      </div>
     </section>
