@@ -6,6 +6,7 @@ import FullscreenMenu from './components/FullscreenMenu';
 import Footer from './components/Footer';
 import ThemeColorMeta from './components/ThemeColorMeta';
 import { useTheme } from './hooks/useTheme';
+import NowPlayingBubble from './components/NowPlayingBubble';
 
 export default function Home() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +30,12 @@ export default function Home() {
     isDarkMode={isDarkMode}
     isMenuOpen={isMenuOpen}
     setIsMenuOpen={setIsMenuOpen}
-   />{' '}
+   />
+   <NowPlayingBubble
+    username={process.env.NEXT_PUBLIC_LASTFM_USERNAME || ''}
+    apiKey={process.env.NEXT_PUBLIC_LASTFM_API_KEY || ''}
+    isDarkMode={isDarkMode}
+   />
    {/* Main Content */}
    <main className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-6">
     {/* Hero Section */}
