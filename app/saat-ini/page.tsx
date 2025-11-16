@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import FullscreenMenu from '../components/FullscreenMenu';
 import Footer from '../components/Footer';
 import { useTheme } from '../hooks/useTheme';
+import NowPlayingBubble from '../components/NowPlayingBubble';
 
 export default function NewPage() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,6 +29,12 @@ export default function NewPage() {
     isDarkMode={isDarkMode}
     isMenuOpen={isMenuOpen}
     setIsMenuOpen={setIsMenuOpen}
+   />
+
+   <NowPlayingBubble
+    username={process.env.NEXT_PUBLIC_LASTFM_USERNAME || ''}
+    apiKey={process.env.NEXT_PUBLIC_LASTFM_API_KEY || ''}
+    isDarkMode={isDarkMode}
    />
 
    <main className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-6">
