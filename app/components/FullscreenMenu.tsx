@@ -48,7 +48,7 @@ export default function FullscreenMenu({
     </div>
 
     <div className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-12 space-y-3">
-     <a
+     {/* <a
       href="/tentang"
       onClick={() => setIsMenuOpen(false)}
       className={`block text-2xl font-semi-bold ${
@@ -58,7 +58,7 @@ export default function FullscreenMenu({
       } transition-colors`}
      >
       Tentang
-     </a>
+     </a> */}
      <a
       href="/saat-ini"
       onClick={() => setIsMenuOpen(false)}
