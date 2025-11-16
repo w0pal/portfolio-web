@@ -49,7 +49,7 @@ export default function FullscreenMenu({
 
     <div className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-12 space-y-3">
      <a
-      href="#tentang"
+      href="/tentang"
       onClick={() => setIsMenuOpen(false)}
       className={`block text-2xl font-semi-bold ${
        isDarkMode
@@ -60,7 +60,7 @@ export default function FullscreenMenu({
       Tentang
      </a>
      <a
-      href="#saat-ini"
+      href="/saat-ini"
       onClick={() => setIsMenuOpen(false)}
       className={`block text-2xl font-semi-bold ${
        isDarkMode
@@ -71,7 +71,7 @@ export default function FullscreenMenu({
       Saat ini
      </a>
      <a
-      href="#blog"
+      href="/blog"
       onClick={() => setIsMenuOpen(false)}
       className={`block text-2xl font-semi-bold ${
        isDarkMode
@@ -80,6 +80,17 @@ export default function FullscreenMenu({
       } transition-colors`}
      >
       Blog
+     </a>
+     <a
+      href="/portfolio"
+      onClick={() => setIsMenuOpen(false)}
+      className={`block text-2xl font-semi-bold ${
+       isDarkMode
+        ? 'text-gray-200 hover:text-white'
+        : 'text-gray-800 hover:text-black'
+      } transition-colors`}
+     >
+      Portfolio
      </a>
     </div>
    </nav>
