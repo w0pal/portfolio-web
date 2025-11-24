@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../components/Header';
-import FullscreenMenu from '../components/FullscreenMenu';
-import Footer from '../components/Footer';
-import { useTheme } from '../hooks/useTheme';
-import NowPlayingBubble from '../components/NowPlayingBubble';
+import Header from '../../components/Header';
+import FullscreenMenu from '../../components/FullscreenMenu';
+import Footer from '../../components/Footer';
+import { useTheme } from '../../hooks/useTheme';
+import NowPlayingBubble from '../../components/NowPlayingBubble';
 
 export default function NewPage() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function NewPage() {
      className="animate-fade-in-up font-semibold animation-delay-400"
      style={{ color: isDarkMode ? '#c2f0fc' : '#000000' }}
     >
-     lagi proses masak, bentar pusing banget bagian ini wkwkkw
+     soon, malas
     </p>
    </main>
    <Footer isDarkMode={isDarkMode} />

@@ -94,13 +94,30 @@ export default function Header({
      {/* Menu Button */}
      <button
       onClick={() => setIsMenuOpen(!isMenuOpen)}
-      className={`p-2 rounded-lg ${
+      className={`p-2 rounded-lg relative w-10 h-10 flex items-center justify-center ${
        isDarkMode
         ? 'text-gray-300 hover:text-white hover:bg-slate-700'
         : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
       } transition-colors`}
+      aria-label="Toggle menu"
      >
-      {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      <div className="w-5 h-5 flex flex-col justify-center items-center">
+       <span
+        className={`block h-0.5 w-5 rounded-sm transition-all duration-300 ease-in-out ${
+         isDarkMode ? 'bg-gray-300' : 'bg-gray-700'
+        } ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+       />
+       <span
+        className={`block h-0.5 w-5 rounded-sm transition-all duration-300 ease-in-out my-1 ${
+         isDarkMode ? 'bg-gray-300' : 'bg-gray-700'
+        } ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}
+       />
+       <span
+        className={`block h-0.5 w-5 rounded-sm transition-all duration-300 ease-in-out ${
+         isDarkMode ? 'bg-gray-300' : 'bg-gray-700'
+        } ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+       />
+      </div>
      </button>
     </div>
    </div>
