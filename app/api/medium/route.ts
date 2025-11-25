@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import Parser from 'rss-parser';
 
 export async function GET(request: Request) {
  try {
@@ -10,64 +9,82 @@ export async function GET(request: Request) {
    return NextResponse.json({ error: 'Username is required' }, { status: 400 });
   }
 
-  const parser = new Parser({
-   customFields: {
-    item: ['content:encoded', 'description'],
+  const rssUrl = `https://medium.com/feed/@${username}`;
+
+  console.log('Fetching Medium RSS from:', rssUrl);
+
+  // Use RSS2JSON API as a proxy to bypass CORS and Cloudflare issues
+  const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+   rssUrl
+  )}`;
+
+  const response = await fetch(apiUrl, {
+   headers: {
+    Accept: 'application/json',
    },
+   next: { revalidate: 3600 }, // Cache for 1 hour
   });
 
-  const rssUrl = `https://medium.com/feed/@${username}`;
-  const feed = await parser.parseURL(rssUrl);
+  if (!response.ok) {
+   throw new Error(
+    `Failed to fetch RSS feed: ${response.status} ${response.statusText}`
+   );
+  }
 
-  const posts = feed.items.map((item: any) => {
-   let thumbnail = '';
-   const imgMatch = item['content:encoded']?.match(/<img[^>]+src="([^">]+)"/);
-   if (imgMatch) {
-    thumbnail = imgMatch[1];
+  const data = await response.json();
+
+  if (data.status !== 'ok') {
+   throw new Error(data.message || 'Failed to parse RSS feed');
+  }
+
+  const posts = data.items.map((item: any) => {
+   // Extract thumbnail from content or use provided thumbnail
+   let thumbnail = item.thumbnail || '';
+
+   if (!thumbnail && item.description) {
+    const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/);
+    if (imgMatch) {
+     thumbnail = imgMatch[1];
+    }
    }
 
-   // Improved description extraction
+   // Clean and truncate description
    let description = '';
-
-   // Try contentSnippet first
-   if (item.contentSnippet) {
-    description = item.contentSnippet.substring(0, 150).trim();
-   }
-   // Try description field
-   else if (item.description) {
+   if (item.description) {
     const cleanDesc = item.description.replace(/<[^>]+>/g, '').trim();
     description = cleanDesc.substring(0, 150);
-   }
-   // Try content:encoded as fallback
-   else if (item['content:encoded']) {
-    const cleanContent = item['content:encoded'].replace(/<[^>]+>/g, '').trim();
-    description = cleanContent.substring(0, 150);
+    if (description.length >= 150) {
+     description += '...';
+    }
    }
 
-   // Add ellipsis only if description exists and was truncated
-   if (description && description.length >= 150) {
-    description += '...';
-   } else if (!description) {
+   if (!description) {
     description = 'Baca selengkapnya...';
    }
 
    return {
     title: item.title || '',
-    link: item.link || '',
-    pubDate: item.pubDate || item.isoDate || '',
+    link: item.link || item.guid || '',
+    pubDate: item.pubDate || '',
     description,
     thumbnail,
     categories: item.categories || [],
-    author: item.creator || username,
+    author: item.author || username,
    };
   });
 
   return NextResponse.json({ posts }, { status: 200 });
- } catch (error) {
+ } catch (error: any) {
   console.error('Error fetching Medium posts:', error);
-  return NextResponse.json(
-   { error: 'Failed to fetch Medium posts' },
-   { status: 500 }
-  );
+
+  // More detailed error message
+  const errorMessage = error?.message || 'Failed to fetch Medium posts';
+  const errorDetails = {
+   error: errorMessage,
+   details: error?.code || error?.type || 'Unknown error',
+   message: 'Pastikan username Medium sudah benar dan profil bersifat publik',
+  };
+
+  return NextResponse.json(errorDetails, { status: 500 });
  }
 }

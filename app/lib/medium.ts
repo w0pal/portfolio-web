@@ -1,5 +1,3 @@
-import Parser from 'rss-parser';
-
 export interface MediumPost {
  title: string;
  link: string;
