@@ -24,6 +24,13 @@ export default function BlogPage() {
   const loadPosts = async () => {
    try {
     setLoading(true);
+
+    if (!mediumUsername) {
+     setError('Username Medium belum dikonfigurasi.');
+     setLoading(false);
+     return;
+    }
+
     const fetchedPosts = await fetchMediumPosts(mediumUsername);
     setPosts(fetchedPosts);
     setError(null);
@@ -36,7 +43,7 @@ export default function BlogPage() {
   };
 
   loadPosts();
- }, []);
+ }, [mediumUsername]);
 
  return (
   <div

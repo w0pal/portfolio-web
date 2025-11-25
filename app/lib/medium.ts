@@ -1,3 +1,5 @@
+import Parser from 'rss-parser';
+
 export interface MediumPost {
  title: string;
  link: string;
@@ -12,52 +14,23 @@ export async function fetchMediumPosts(
  username: string
 ): Promise<MediumPost[]> {
  try {
-  // Medium RSS feed URL
-  const rssUrl = `https://medium.com/feed/@${username}`;
+  if (!username) {
+   console.error('Medium username is empty');
+   return [];
+  }
 
-  // Using RSS2JSON API to convert Medium RSS to JSON
-  const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-   rssUrl
-  )}`;
-
-  const response = await fetch(apiUrl, {
-   next: { revalidate: 3600 }, // Revalidate every hour
+  const response = await fetch(`/api/medium?username=${username}`, {
+   cache: 'no-store', // Atau gunakan next: { revalidate: 3600 }
   });
 
   if (!response.ok) {
+   const errorData = await response.json().catch(() => ({}));
+   console.error('Failed to fetch Medium posts:', response.status, errorData);
    throw new Error('Failed to fetch Medium posts');
   }
 
   const data = await response.json();
-
-  if (data.status !== 'ok') {
-   throw new Error('RSS feed error');
-  }
-
-  const posts: MediumPost[] = data.items.map((item: any) => {
-   // Extract thumbnail from content
-   let thumbnail = '';
-   const imgMatch = item.content?.match(/<img[^>]+src="([^">]+)"/);
-   if (imgMatch) {
-    thumbnail = imgMatch[1];
-   }
-
-   // Clean description from HTML
-   const description =
-    item.description?.replace(/<[^>]+>/g, '').substring(0, 150) + '...';
-
-   return {
-    title: item.title,
-    link: item.link,
-    pubDate: item.pubDate,
-    description: description || '',
-    thumbnail,
-    categories: item.categories || [],
-    author: item.author || username,
-   };
-  });
-
-  return posts;
+  return data.posts || [];
  } catch (error) {
   console.error('Error fetching Medium posts:', error);
   return [];
