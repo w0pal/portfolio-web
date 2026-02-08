@@ -9,10 +9,15 @@ import Footer from './components/Footer';
 import ThemeColorMeta from './components/ThemeColorMeta';
 import { useTheme } from './hooks/useTheme';
 import NowPlayingBubble from './components/NowPlayingBubble';
+import { navLinks } from './config/navigation';
 
 export default function Home() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const { themeMode, isDarkMode, setTheme } = useTheme();
+
+ // Get links from config
+ const portfolioLink = navLinks.find(link => link.label === 'Portfolio');
+ const aboutLink = navLinks.find(link => link.label === 'About');
 
  return (
   <div
@@ -76,25 +81,25 @@ export default function Home() {
     {/* CTA Buttons */}
     <div className="flex flex-wrap justify-center gap-4 mb-16 animate-fade-in-up animation-delay-600">
      <Link
-      href="/portfolio"
+      href={portfolioLink?.href || ''}
       className={`group inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
        isDarkMode
         ? 'bg-white text-gray-900 hover:bg-gray-100'
         : 'bg-gray-900 text-white hover:bg-gray-800'
       }`}
      >
-      <span>Lihat Portfolio</span>
+      <span>Lihat {portfolioLink?.label || ''}</span>
       <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
      </Link>
      <Link
-      href="/tentang"
+      href={aboutLink?.href || ''}
       className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
        isDarkMode
         ? 'bg-slate-800 text-white border border-slate-700 hover:bg-slate-700'
         : 'bg-white text-gray-900 border border-gray-200 hover:bg-gray-50'
       }`}
      >
-      <span>Tentang Aku</span>
+      <span>{aboutLink?.label || ''}</span>
       <ArrowRight size={18} />
      </Link>
     </div>
