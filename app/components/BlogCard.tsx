@@ -1,4 +1,5 @@
-import { ExternalLink, Calendar, Tag } from 'lucide-react';
+import Link from 'next/link';
+import { Calendar, Tag, ArrowRight } from 'lucide-react';
 import { MediumPost } from '../lib/medium';
 import { formatDate } from '../lib/medium';
 
@@ -9,10 +10,8 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, isDarkMode }: BlogCardProps) {
  return (
-  <a
-   href={post.link}
-   target="_blank"
-   rel="noopener noreferrer"
+  <Link
+   href={`/blog/${post.slug}`}
    className={`group block rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
     isDarkMode
      ? 'bg-slate-700 hover:bg-slate-600 shadow-lg shadow-slate-900/50'
@@ -27,9 +26,6 @@ export default function BlogCard({ post, isDarkMode }: BlogCardProps) {
       alt={post.title}
       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
      />
-     <div className="absolute top-3 right-3 p-2 rounded-full bg-black/50 backdrop-blur-sm">
-      <ExternalLink size={16} className="text-white" />
-     </div>
     </div>
    )}
 
@@ -82,7 +78,22 @@ export default function BlogCard({ post, isDarkMode }: BlogCardProps) {
       </div>
      )}
     </div>
+
+    {/* Read More Indicator */}
+    <div
+     className={`mt-4 flex items-center gap-1 text-sm font-medium transition-colors ${
+      isDarkMode
+       ? 'text-cyan-400 group-hover:text-cyan-300'
+       : 'text-blue-600 group-hover:text-blue-500'
+     }`}
+    >
+     <span>Baca selengkapnya</span>
+     <ArrowRight
+      size={16}
+      className="transition-transform group-hover:translate-x-1"
+     />
+    </div>
    </div>
-  </a>
+  </Link>
  );
 }

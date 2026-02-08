@@ -8,6 +8,8 @@ export interface MediumPost {
  thumbnail?: string;
  categories: string[];
  author: string;
+ slug: string;
+ fullContent: string;
 }
 
 export async function fetchMediumPosts(
@@ -105,14 +107,17 @@ export async function fetchMediumPosts(
        ];
    }
 
+   const title = item.title || '';
    return {
-    title: item.title || '',
+    title,
     link: item.link?.['@_href'] || item.link || item.guid || '',
     pubDate: item.pubDate || item.published || '',
     description,
     thumbnail,
     categories: categories.filter(Boolean),
     author: item['dc:creator'] || item.author?.name || item.author || username,
+    slug: generateSlug(title),
+    fullContent: content,
    };
   });
 
@@ -131,4 +136,21 @@ export function formatDate(dateString: string): string {
   day: 'numeric',
  };
  return date.toLocaleDateString('id-ID', options);
+}
+
+export function generateSlug(title: string): string {
+ return title
+  .toLowerCase()
+  .replace(/[^a-z0-9\s-]/g, '')
+  .replace(/\s+/g, '-')
+  .replace(/-+/g, '-')
+  .trim();
+}
+
+export async function getPostBySlug(
+ username: string,
+ slug: string
+): Promise<MediumPost | null> {
+ const posts = await fetchMediumPosts(username);
+ return posts.find((post) => post.slug === slug) || null;
 }

@@ -1,6 +1,8 @@
 'use client';
 
-import { X } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { X, Home, User, Folder, FileText, Sparkles } from 'lucide-react';
 
 interface FullscreenMenuProps {
  isDarkMode: boolean;
@@ -8,92 +10,92 @@ interface FullscreenMenuProps {
  setIsMenuOpen: (open: boolean) => void;
 }
 
+const menuLinks = [
+ { href: '/', label: 'Home', icon: Home },
+ { href: '/tentang', label: 'About', icon: User },
+ { href: '/portfolio', label: 'Projects', icon: Folder },
+ { href: '/blog', label: 'Posts', icon: FileText },
+ { href: '/saat-ini', label: 'Now', icon: Sparkles },
+];
+
 export default function FullscreenMenu({
  isDarkMode,
  isMenuOpen,
  setIsMenuOpen,
 }: FullscreenMenuProps) {
+ const pathname = usePathname();
+
  return (
-  <div
-   className={`fixed inset-0 z-40 transition-opacity duration-300 ${
-    isMenuOpen
-     ? 'opacity-100 pointer-events-auto'
-     : 'opacity-0 pointer-events-none'
-   }`}
-  >
-   <nav
-    className={`absolute inset-0 ${
-     isDarkMode ? 'bg-slate-800' : 'bg-white'
-    } overflow-y-auto`}
+  <>
+   {/* Backdrop */}
+   <div
+    className={`fixed inset-0 z-40 transition-opacity duration-300 ${
+     isMenuOpen
+      ? 'opacity-100 pointer-events-auto'
+      : 'opacity-0 pointer-events-none'
+    } ${isDarkMode ? 'bg-black/60' : 'bg-black/40'} backdrop-blur-sm`}
+    onClick={() => setIsMenuOpen(false)}
+   />
+
+   {/* Slide-in Menu */}
+   <div
+    className={`fixed top-0 right-0 h-full w-[280px] z-50 transition-transform duration-300 ease-out ${
+     isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+    } ${
+     isDarkMode
+      ? 'bg-slate-900 border-l border-slate-800'
+      : 'bg-white border-l border-gray-200'
+    }`}
    >
-    <div className="w-full px-6 py-2 flex items-center justify-between">
-     <a
-      href="/"
-      className={`text-2xl px-2 font-bold transition-opacity hover:opacity-70 cursor-pointer ${
+    {/* Header */}
+    <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700/50">
+     <span
+      className={`text-lg font-semibold ${
        isDarkMode ? 'text-white' : 'text-gray-900'
       }`}
      >
-      w0pal
-     </a>
+      Menu
+     </span>
      <button
       onClick={() => setIsMenuOpen(false)}
-      className={`p-2 rounded-lg ${
+      className={`p-2 rounded-lg transition-colors ${
        isDarkMode
-        ? 'text-gray-300 hover:text-white hover:bg-slate-700'
-        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-      } transition-colors`}
+        ? 'text-gray-400 hover:text-white hover:bg-slate-800'
+        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+      }`}
+      aria-label="Close menu"
      >
-      <X size={24} />
+      <X size={20} />
      </button>
     </div>
 
-    <div className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-12 space-y-3">
-     <a
-      href="/tentang"
-      onClick={() => setIsMenuOpen(false)}
-      className={`block text-2xl font-semi-bold ${
-       isDarkMode
-        ? 'text-gray-200 hover:text-white'
-        : 'text-gray-800 hover:text-black'
-      } transition-colors`}
-     >
-      Tentang
-     </a>
-     <a
-      href="/saat-ini"
-      onClick={() => setIsMenuOpen(false)}
-      className={`block text-2xl font-semi-bold ${
-       isDarkMode
-        ? 'text-gray-200 hover:text-white'
-        : 'text-gray-800 hover:text-black'
-      } transition-colors`}
-     >
-      Saat ini
-     </a>
-     <a
-      href="/blog"
-      onClick={() => setIsMenuOpen(false)}
-      className={`block text-2xl font-semi-bold ${
-       isDarkMode
-        ? 'text-gray-200 hover:text-white'
-        : 'text-gray-800 hover:text-black'
-      } transition-colors`}
-     >
-      Blog
-     </a>
-     <a
-      href="/portfolio"
-      onClick={() => setIsMenuOpen(false)}
-      className={`block text-2xl font-semi-bold ${
-       isDarkMode
-        ? 'text-gray-200 hover:text-white'
-        : 'text-gray-800 hover:text-black'
-      } transition-colors`}
-     >
-      Portfolio
-     </a>
-    </div>
-   </nav>
-  </div>
+    {/* Navigation Links */}
+    <nav className="px-4 py-6 space-y-2">
+     {menuLinks.map((link) => {
+      const Icon = link.icon;
+      const isActive = pathname === link.href;
+      return (
+       <Link
+        key={link.href}
+        href={link.href}
+        onClick={() => setIsMenuOpen(false)}
+        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+         isActive
+          ? isDarkMode
+            ? 'bg-slate-800 text-white'
+            : 'bg-gray-100 text-gray-900'
+          : isDarkMode
+          ? 'text-gray-400 hover:text-white hover:bg-slate-800/50'
+          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+        }`}
+       >
+        <Icon size={20} />
+        <span className="font-medium">{link.label}</span>
+       </Link>
+      );
+     })}
+    </nav>
+   </div>
+  </>
  );
 }

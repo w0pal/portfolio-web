@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Camera, Monitor, Code, MapPin } from 'lucide-react';
 import Header from '../../components/Header';
 import FullscreenMenu from '../../components/FullscreenMenu';
 import Footer from '../../components/Footer';
@@ -8,14 +9,32 @@ import ThemeColorMeta from '../../components/ThemeColorMeta';
 import { useTheme } from '../../hooks/useTheme';
 import NowPlayingBubble from '../../components/NowPlayingBubble';
 
-export default function Home() {
+export default function TentangPage() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const { themeMode, isDarkMode, setTheme } = useTheme();
+
+ const interests = [
+  {
+   icon: Monitor,
+   title: 'PC Enthusiast',
+   description: 'Sejak 2020, membangun dan mengoptimalkan PC',
+  },
+  {
+   icon: Code,
+   title: 'Linux User',
+   description: 'Pengguna Linux Desktop sejak 2023',
+  },
+  {
+   icon: Camera,
+   title: 'Fotografer',
+   description: 'Street photography dengan kamera & smartphone',
+  },
+ ];
 
  return (
   <div
    className={`min-h-screen ${
-    isDarkMode ? 'bg-slate-800' : 'bg-white'
+    isDarkMode ? 'bg-slate-900 glow-effect grid-background' : 'bg-white grid-background-light'
    } transition-colors duration-300`}
   >
    <ThemeColorMeta isDarkMode={isDarkMode} />
@@ -36,76 +55,128 @@ export default function Home() {
     apiKey={process.env.NEXT_PUBLIC_LASTFM_API_KEY || ''}
     isDarkMode={isDarkMode}
    />
-   {/* Main Content */}
-   <main className="container mx-auto max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] px-6 py-6">
-    {/* Hero Section */}
-    <section className="mb-1">
-     <h1
-      className="text-4xl font-bold mb-4 animate-fade-in-up"
-      style={{ color: isDarkMode ? '#F8F9FA' : '#1F2937' }}
-     >
-      Hi, I am Mohammad Naufal Maulana!
-     </h1>
 
-     <div className="w-full md:w-auto mb-4 animate-fade-in-up animation-delay-200">
-      <img
-       src="/profile.webp"
-       alt="Mohammad Naufal Maulana"
-       className="w-48 h-48 md:w-64 md:h-64 rounded-lg object-cover shadow-lg"
-      />
+   <main className="container mx-auto max-w-[90%] lg:max-w-[70%] xl:max-w-[60%] px-6 py-12 relative z-10">
+    {/* Hero Section */}
+    <section className="flex flex-col md:flex-row items-center gap-8 mb-16">
+     {/* Profile Photo */}
+     <div className="animate-scale-in">
+      <div
+       className={`relative w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden ${
+        isDarkMode ? 'ring-4 ring-slate-700' : 'ring-4 ring-gray-200'
+       }`}
+      >
+       <img
+        src="/profile.webp"
+        alt="Mohammad Naufal Maulana"
+        className="w-full h-full object-cover"
+       />
+      </div>
      </div>
 
-     <div className="space-y-6">
-      <h2
-       className="leading-relaxed text-2xl font-semibold animate-fade-in-up animation-delay-200"
-       style={{ color: isDarkMode ? '#c2f0fc' : '#1F2937' }}
+     {/* Name & Role */}
+     <div className="text-center md:text-left">
+      <h1
+       className={`text-3xl md:text-4xl font-bold mb-2 animate-fade-in-up ${
+        isDarkMode ? 'text-white' : 'text-gray-900'
+       }`}
       >
-       Seorang mahasiswa informatika tingkat ketiga yang menyukai teknologi dan
-       fotografi. Seorang PC Enthusiast sejak 2020, dan juga pengguna Linux
-       Desktop sejak 2023. Juga menyukai fotografi melalui media sosial, hingga
-       akhirnya menjadi hobi keduaku. Memiliki kemampuan memotret dengan genre
-       foto jalanan baik melalui kamera ataupun smartphone.
-      </h2>
-
+       Mohammad Naufal Maulana
+      </h1>
       <p
-       className="leading-relaxed text-lg font-normal animate-fade-in-up animation-delay-300"
-       style={{ color: isDarkMode ? '#FFFFFF' : '#000000' }}
+       className={`text-lg mb-3 animate-fade-in-up animation-delay-200 ${
+        isDarkMode ? 'text-cyan-400' : 'text-blue-600'
+       }`}
       >
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla posuere
-       rhoncus mauris et viverra. Vestibulum metus est, gravida a orci ut,
-       tempor dignissim neque. Aliquam pharetra, tortor in vestibulum aliquet,
-       lectus nunc molestie nunc, eget scelerisque mauris eros non purus.
-       Aliquam efficitur metus ut velit accumsan, rutrum lacinia quam mollis.
-       Nulla facilisi. Curabitur vel ex urna. Integer fermentum, libero eu
-       commodo rutrum, purus nulla elementum eros, eget blandit tortor dolor at
-       lacus. Aliquam eget sollicitudin sem. Nulla eleifend tortor pretium est
-       pharetra, non pharetra ipsum faucibus. Integer cursus et magna at varius.
-       Nam nec fringilla augue. Ut sem velit, lacinia eget libero a, ornare
-       mollis massa. Integer lobortis arcu metus, eu rhoncus nisl viverra
-       ullamcorper. Pellentesque sit amet luctus lacus, nec pulvinar diam.
+       Mahasiswa Informatika
       </p>
-
-      <p
-       className="leading-relaxed text-lg font-normal animate-fade-in-up animation-delay-400"
-       style={{ color: isDarkMode ? '#FFFFFF' : '#000000' }}
+      <div
+       className={`inline-flex items-center gap-2 text-sm animate-fade-in-up animation-delay-400 ${
+        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+       }`}
       >
-       Aliquam aliquam, massa vel molestie laoreet, metus leo faucibus leo, non
-       ornare magna justo dapibus enim. Curabitur efficitur in neque quis
-       tincidunt. Integer bibendum ipsum sed porta molestie. Nam laoreet turpis
-       tortor, id auctor lectus pretium rhoncus. In commodo libero id laoreet
-       pharetra. Integer et massa imperdiet, feugiat elit quis, vulputate dolor.
-       Quisque suscipit pellentesque mattis.
+       <MapPin size={14} />
+       <span>Indonesia</span>
+      </div>
+     </div>
+    </section>
+
+    {/* About Section */}
+    <section className="mb-16">
+     <h2
+      className={`text-xl font-semibold mb-6 animate-fade-in-up ${
+       isDarkMode ? 'text-white' : 'text-gray-900'
+      }`}
+     >
+      Tentang
+     </h2>
+     <div
+      className={`space-y-4 animate-fade-in-up animation-delay-200 ${
+       isDarkMode ? 'text-gray-300' : 'text-gray-700'
+      }`}
+     >
+      <p className="leading-relaxed">
+       Seorang mahasiswa informatika tingkat ketiga yang memiliki passion di bidang 
+       teknologi dan fotografi. Perjalanan sebagai PC Enthusiast dimulai sejak 2020, 
+       kemudian beralih menjadi pengguna Linux Desktop sejak 2023.
       </p>
+      <p className="leading-relaxed">
+       Selain teknologi, fotografi menjadi hobi kedua yang bermula dari aktivitas di 
+       media sosial. Memiliki ketertarikan khusus pada genre street photography, 
+       baik menggunakan kamera maupun smartphone.
+      </p>
+     </div>
+    </section>
 
-      <h2
-       className="text-2xl font-semibold mb-6 animate-fade-in-up"
-       style={{ color: isDarkMode ? '#c2f0fc' : '#1F2937' }}
-      >
-       Rencananya, aku akan memasukkan blog pribadi aku di sini. Namun, nanti
-       aja deh. Malas. Sekarang mah lorem ipsum dulu aja buat test. Oh iya,
-       template warna ini akan aku jadikan 'base' untuk website ini kedepannya,
-       sebelum aku menambahkan fitur lainnya. So, this is it!
-      </h2>
+    {/* Interests Grid */}
+    <section className="mb-16">
+     <h2
+      className={`text-xl font-semibold mb-6 animate-fade-in-up ${
+       isDarkMode ? 'text-white' : 'text-gray-900'
+      }`}
+     >
+      Minat & Keahlian
+     </h2>
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {interests.map((item, index) => {
+       const Icon = item.icon;
+       return (
+        <div
+         key={item.title}
+         className={`p-6 rounded-xl animate-fade-in-up ${
+          isDarkMode
+           ? 'bg-slate-800/50 border border-slate-700'
+           : 'bg-gray-50 border border-gray-200'
+         }`}
+         style={{ animationDelay: `${index * 100 + 200}ms` }}
+        >
+         <div
+          className={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${
+           isDarkMode ? 'bg-slate-700' : 'bg-gray-200'
+          }`}
+         >
+          <Icon
+           size={20}
+           className={isDarkMode ? 'text-cyan-400' : 'text-blue-600'}
+          />
+         </div>
+         <h3
+          className={`font-medium mb-2 ${
+           isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}
+         >
+          {item.title}
+         </h3>
+         <p
+          className={`text-sm ${
+           isDarkMode ? 'text-gray-400' : 'text-gray-600'
+          }`}
+         >
+          {item.description}
+         </p>
+        </div>
+       );
+      })}
      </div>
     </section>
 
