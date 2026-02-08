@@ -60,7 +60,7 @@ export default function SaatIniPage() {
        isDarkMode ? 'text-white' : 'text-gray-900'
       }`}
      >
-      Now
+      Status
      </h1>
      <p
       className={`text-lg animate-fade-in-up animation-delay-200 ${

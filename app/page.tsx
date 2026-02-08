@@ -14,29 +14,6 @@ export default function Home() {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
  const { themeMode, isDarkMode, setTheme } = useTheme();
 
- const navigationCards = [
-  {
-   title: 'tentang',
-   description: 'kenali siapa aku',
-   href: '/tentang',
-  },
-  {
-   title: 'blog',
-   description: 'tulisan-tulisanku',
-   href: '/blog',
-  },
-  {
-   title: 'portfolio',
-   description: 'karya profesionalku',
-   href: '/portfolio',
-  },
-  {
-   title: 'saat ini',
-   description: 'goals dan hal yang kusuka',
-   href: '/saat-ini',
-  },
- ];
-
  return (
   <div
    className={`min-h-screen ${
@@ -122,38 +99,6 @@ export default function Home() {
      </Link>
     </div>
 
-    {/* Quick Navigation */}
-    <div className="w-full max-w-xl">
-     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {navigationCards.map((card, index) => (
-       <Link
-        key={card.href}
-        href={card.href}
-        className={`group p-4 rounded-xl text-center transition-all duration-300 hover:scale-105 animate-fade-in-up ${
-         isDarkMode
-          ? 'bg-slate-800/50 hover:bg-slate-700/80 border border-slate-700/50'
-          : 'bg-gray-50 hover:bg-gray-100 border border-gray-200'
-        }`}
-        style={{ animationDelay: `${index * 100 + 700}ms` }}
-       >
-        <h3
-         className={`text-sm font-medium mb-1 ${
-          isDarkMode ? 'text-white' : 'text-gray-900'
-         }`}
-        >
-         {card.title}
-        </h3>
-        <p
-         className={`text-xs ${
-          isDarkMode ? 'text-gray-500' : 'text-gray-500'
-         }`}
-        >
-         {card.description}
-        </p>
-       </Link>
-      ))}
-     </div>
-    </div>
    </main>
 
    {/* Footer */}

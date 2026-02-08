@@ -2,21 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Home, User, Folder, FileText, Sparkles } from 'lucide-react';
+import { X } from 'lucide-react';
+import { navLinks } from '../config/navigation';
 
 interface FullscreenMenuProps {
  isDarkMode: boolean;
  isMenuOpen: boolean;
  setIsMenuOpen: (open: boolean) => void;
 }
-
-const menuLinks = [
- { href: '/', label: 'Home', icon: Home },
- { href: '/tentang', label: 'About', icon: User },
- { href: '/portfolio', label: 'Projects', icon: Folder },
- { href: '/blog', label: 'Posts', icon: FileText },
- { href: '/saat-ini', label: 'Now', icon: Sparkles },
-];
 
 export default function FullscreenMenu({
  isDarkMode,
@@ -71,7 +64,7 @@ export default function FullscreenMenu({
 
     {/* Navigation Links */}
     <nav className="px-4 py-6 space-y-2">
-     {menuLinks.map((link) => {
+     {navLinks.map((link) => {
       const Icon = link.icon;
       const isActive = pathname === link.href;
       return (

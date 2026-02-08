@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Monitor, Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
+import { navLinks } from '../config/navigation';
 
 type ThemeMode = 'system' | 'light' | 'dark';
 
@@ -13,14 +14,6 @@ interface HeaderProps {
  isMenuOpen: boolean;
  setIsMenuOpen: (open: boolean) => void;
 }
-
-const navLinks = [
- { href: '/', label: 'Home' },
- { href: '/tentang', label: 'About' },
- { href: '/portfolio', label: 'Projects' },
- { href: '/blog', label: 'Posts' },
- { href: '/saat-ini', label: 'Now' },
-];
 
 export default function Header({
  isDarkMode,

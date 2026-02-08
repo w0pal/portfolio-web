@@ -58,7 +58,7 @@ export default function PortfolioPage() {
        isDarkMode ? 'text-white' : 'text-gray-900'
       }`}
      >
-      Projects
+      Portfolio
      </h1>
      <p
       className={`text-lg animate-fade-in-up animation-delay-200 ${
