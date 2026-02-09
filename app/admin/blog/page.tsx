@@ -54,17 +54,19 @@ export default async function AdminBlogPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Blog Posts</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Blog Posts</h1>
         <Link
           href="/admin/blog/new"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 md:px-4 bg-blue-600 text-white text-sm md:text-base rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <Plus size={20} />
-          Write Post
+          <Plus size={18} />
+          <span className="hidden sm:inline">Write Post</span>
+          <span className="sm:hidden">New</span>
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden md:block bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50 dark:bg-slate-700/50 border-b border-gray-200 dark:border-slate-700">
@@ -143,9 +145,64 @@ export default async function AdminBlogPage() {
         </table>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {allPosts.map((post) => (
+          <div
+            key={post.id}
+            className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-4"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium text-gray-900 dark:text-white line-clamp-2">{post.title}</h3>
+                <div className="flex items-center gap-2 mt-2">
+                  <span
+                    className={`px-2 py-0.5 text-xs rounded-full ${
+                      post.source === 'MEDIUM'
+                        ? 'bg-black text-white'
+                        : 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+                    }`}
+                  >
+                    {post.source}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="p-2 text-green-600 hover:bg-green-50 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                >
+                  <Eye size={18} />
+                </Link>
+                {!post.isFromMedium && (
+                  <>
+                    <Link
+                      href={`/admin/blog/${post.slug}`}
+                      className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                    >
+                      <Edit size={18} />
+                    </Link>
+                    <DeleteButton id={post.slug} endpoint="/api/blog" identifierType="slug" />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+        {allPosts.length === 0 && (
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            No blog posts found. Write something new!
+          </div>
+        )}
+      </div>
+
       <p className="text-sm text-gray-500 dark:text-gray-400">
         Posts from Medium RSS are read-only. To edit them, manage them directly on Medium.
       </p>
     </div>
   );
 }
+

@@ -1,7 +1,7 @@
 import { prisma } from '../../lib/prisma';
 import PortfolioClient from './PortfolioClient';
 
-export const dynamic = 'force-dynamic'; // Ensure fresh data
+export const revalidate = 60; // Cache for 60 seconds
 
 export default async function PortfolioPage() {
   const items = await prisma.portfolioItem.findMany({

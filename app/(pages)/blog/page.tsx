@@ -2,17 +2,18 @@ import { prisma } from '../../lib/prisma';
 import { fetchMediumPosts } from '../../lib/medium';
 import BlogContent from './BlogContent';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds
 
 export default async function BlogPage() {
-  // Fetch local posts from database
-  const localPosts = await prisma.blogPost.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
-
-  // Fetch Medium posts
   const mediumUsername = process.env.NEXT_PUBLIC_MEDIUM_USERNAME || '';
-  const mediumPosts = await fetchMediumPosts(mediumUsername);
+
+  // Fetch local and medium posts in parallel
+  const [localPosts, mediumPosts] = await Promise.all([
+    prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
+    }),
+    fetchMediumPosts(mediumUsername),
+  ]);
 
   // Convert Medium posts to the same format as database posts
   const mediumPostsFormatted = mediumPosts.map((post) => ({
