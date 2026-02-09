@@ -43,7 +43,7 @@ export default function BlogContent({ posts }: BlogContentProps) {
   return (
     <div
       className={`min-h-screen ${
-        isDarkMode ? 'bg-slate-900 glow-effect grid-background' : 'bg-white grid-background-light'
+        isDarkMode ? 'bg-slate-900 glow-effect grid-background' : 'bg-gray-50 grid-background-light'
       } transition-colors duration-300`}
     >
       <Header

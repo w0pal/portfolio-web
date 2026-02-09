@@ -100,11 +100,14 @@ function UserMenu({ isDarkMode }: { isDarkMode: boolean }) {
 
       {isOpen && (
         <div
-          className={`absolute right-0 mt-2 w-64 rounded-xl shadow-lg border animate-fade-in-up origin-top-right overflow-hidden ${
-            isDarkMode
-              ? 'bg-slate-900 border-slate-800'
-              : 'bg-white border-gray-100'
-          }`}
+          className={`
+            absolute left-0 top-full mt-2 w-72 max-w-[90vw] rounded-xl shadow-xl border animate-fade-in-up origin-top-left overflow-hidden z-50
+            ${
+              isDarkMode
+                ? 'bg-slate-900 border-slate-700'
+                : 'bg-white border-gray-200'
+            }
+          `}
         >
           <div className="p-4 border-b border-gray-100 dark:border-slate-800">
             <p
@@ -177,22 +180,8 @@ export default function Header({
       } backdrop-blur-md`}
     >
       <div className="w-full max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          className={`flex items-center gap-2 text-xl font-bold transition-opacity hover:opacity-70 ${
-            isDarkMode ? 'text-white' : 'text-gray-900'
-          }`}
-        >
-          <span
-            className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
-              isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-100 text-gray-900'
-            }`}
-          >
-            W
-          </span>
-          <span className="hidden sm:inline">w0pal</span>
-        </Link>
+        {/* Left: User Menu (Replacing Logo) */}
+        <UserMenu isDarkMode={isDarkMode} />
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1">
@@ -220,9 +209,6 @@ export default function Header({
 
         {/* Right Side Controls */}
         <div className="flex items-center gap-2">
-          {/* User Menu */}
-          <UserMenu isDarkMode={isDarkMode} />
-
           {/* Theme Toggle - Single Button */}
           <button
             onClick={() => {

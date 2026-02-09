@@ -34,8 +34,8 @@ export default function BlogCard({ post, isDarkMode }: BlogCardProps) {
       href={href}
       className={`group block rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
         isDarkMode
-          ? 'bg-slate-700 hover:bg-slate-600 shadow-lg shadow-slate-900/50'
-          : 'bg-white hover:bg-gray-50 shadow-lg shadow-gray-200/50'
+          ? 'bg-slate-700 hover:bg-slate-600 shadow-lg shadow-slate-900/50 border border-transparent'
+          : 'bg-white hover:bg-gray-50 shadow hover:shadow-md border border-gray-300'
       }`}
     >
       {/* Thumbnail */}
@@ -65,7 +65,7 @@ export default function BlogCard({ post, isDarkMode }: BlogCardProps) {
         {/* Description */}
         <p
           className={`text-sm mb-4 line-clamp-3 ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            isDarkMode ? 'text-gray-300' : 'text-gray-700'
           }`}
         >
           {post.description}
