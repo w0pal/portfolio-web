@@ -81,7 +81,20 @@ export default function BlogContent({ posts }: BlogContentProps) {
               isDarkMode ? 'text-gray-400' : 'text-gray-600'
             }`}
           >
-            Tulisan-tulisan dari Medium dan catatan pribadi.
+            Tulisan-tulisan dari Medium dan catatan pribadi. Untuk yang lebih personal, cek{' '}
+
+      <a
+       href="https://www.threads.com/@w0pal"
+       target="_blank"
+       rel="noopener noreferrer"
+       className={`underline transition-colors ${
+        isDarkMode
+         ? 'text-cyan-400 hover:text-cyan-300'
+         : 'text-blue-600 hover:text-blue-500'
+       }`}
+      >
+       Threads
+      </a>
           </p>
         </div>
 
