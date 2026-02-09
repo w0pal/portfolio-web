@@ -42,6 +42,8 @@ export default function SaatIniPage() {
 
    <FullscreenMenu
     isDarkMode={isDarkMode}
+    themeMode={themeMode}
+    setTheme={setTheme}
     isMenuOpen={isMenuOpen}
     setIsMenuOpen={setIsMenuOpen}
    />

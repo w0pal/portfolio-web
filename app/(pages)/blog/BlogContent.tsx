@@ -46,6 +46,8 @@ export default function BlogContent({ posts }: BlogContentProps) {
 
    <FullscreenMenu
     isDarkMode={isDarkMode}
+    themeMode={themeMode}
+    setTheme={setTheme}
     isMenuOpen={isMenuOpen}
     setIsMenuOpen={setIsMenuOpen}
    />

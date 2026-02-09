@@ -47,6 +47,8 @@ export default function TentangPage() {
    />
    <FullscreenMenu
     isDarkMode={isDarkMode}
+    themeMode={themeMode}
+    setTheme={setTheme}
     isMenuOpen={isMenuOpen}
     setIsMenuOpen={setIsMenuOpen}
    />

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Monitor } from 'lucide-react';
 import { navLinks } from '../config/navigation';
 
 type ThemeMode = 'system' | 'light' | 'dark';
@@ -78,16 +78,26 @@ export default function Header({
     <div className="flex items-center gap-2">
      {/* Theme Toggle - Single Button */}
      <button
-      onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+      onClick={() => {
+       if (themeMode === 'light') setTheme('dark');
+       else if (themeMode === 'dark') setTheme('system');
+       else setTheme('light');
+      }}
       className={`p-2 rounded-lg transition-colors ${
        isDarkMode
         ? 'text-gray-400 hover:text-white hover:bg-slate-800'
         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
       }`}
       aria-label="Toggle theme"
-      title={isDarkMode ? 'Light mode' : 'Dark mode'}
+      title={`Current: ${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)}`}
      >
-      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+      {themeMode === 'light' ? (
+       <Sun size={18} />
+      ) : themeMode === 'dark' ? (
+       <Moon size={18} />
+      ) : (
+       <Monitor size={18} />
+      )}
      </button>
 
      {/* Mobile Menu Button */}

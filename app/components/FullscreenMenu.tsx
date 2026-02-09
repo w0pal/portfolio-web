@@ -2,17 +2,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X } from 'lucide-react';
+import { X, Sun, Moon, Monitor } from 'lucide-react';
 import { navLinks } from '../config/navigation';
+
+type ThemeMode = 'system' | 'light' | 'dark';
 
 interface FullscreenMenuProps {
  isDarkMode: boolean;
+ themeMode: ThemeMode;
+ setTheme: (theme: ThemeMode) => void;
  isMenuOpen: boolean;
  setIsMenuOpen: (open: boolean) => void;
 }
 
 export default function FullscreenMenu({
  isDarkMode,
+ themeMode,
+ setTheme,
  isMenuOpen,
  setIsMenuOpen,
 }: FullscreenMenuProps) {
@@ -88,6 +94,43 @@ export default function FullscreenMenu({
       );
      })}
     </nav>
+   {/* Theme Toggle Section */}
+    <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-slate-700/50">
+     <div className="flex items-center justify-between">
+      <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+       Appearance
+      </span>
+      <button
+       onClick={() => {
+        if (themeMode === 'light') setTheme('dark');
+        else if (themeMode === 'dark') setTheme('system');
+        else setTheme('light');
+       }}
+       className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+        isDarkMode
+         ? 'bg-slate-800 text-white hover:bg-slate-700'
+         : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+       }`}
+      >
+       {themeMode === 'light' ? (
+        <>
+         <Sun size={16} />
+         <span className="text-sm">Light</span>
+        </>
+       ) : themeMode === 'dark' ? (
+        <>
+         <Moon size={16} />
+         <span className="text-sm">Dark</span>
+        </>
+       ) : (
+        <>
+         <Monitor size={16} />
+         <span className="text-sm">System</span>
+        </>
+       )}
+      </button>
+     </div>
+    </div>
    </div>
   </>
  );
