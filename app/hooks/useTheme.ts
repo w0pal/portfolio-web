@@ -11,6 +11,7 @@ export function useTheme() {
 
  // Load theme from localStorage after mount
  useEffect(() => {
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   setMounted(true);
   const savedTheme = localStorage.getItem('theme') as ThemeMode;
   if (savedTheme) {

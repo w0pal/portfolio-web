@@ -3,8 +3,53 @@ import { fetchMediumPosts } from '../../../lib/medium';
 import BlogDetailContent from './BlogDetailContent';
 import { notFound } from 'next/navigation';
 
+import { Metadata } from 'next';
+
 interface BlogDetailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  // Try DB first
+  const dbPost = await prisma.blogPost.findUnique({
+    where: { slug },
+    select: { title: true, description: true, coverImage: true },
+  });
+
+  if (dbPost) {
+    return {
+      title: `${dbPost.title} | w0pal's Blog`,
+      description: dbPost.description || dbPost.title,
+      openGraph: {
+        title: dbPost.title,
+        description: dbPost.description || undefined,
+        images: dbPost.coverImage ? [dbPost.coverImage] : [],
+      },
+    };
+  }
+
+  // Try Medium
+  const mediumUsername = process.env.NEXT_PUBLIC_MEDIUM_USERNAME || '';
+  const mediumPosts = await fetchMediumPosts(mediumUsername);
+  const mediumPost = mediumPosts.find((post) => post.slug === slug);
+
+  if (mediumPost) {
+    return {
+      title: `${mediumPost.title} | w0pal's Blog`,
+      description: mediumPost.description,
+      openGraph: {
+        title: mediumPost.title,
+        description: mediumPost.description,
+        images: mediumPost.thumbnail ? [mediumPost.thumbnail] : [],
+      },
+    };
+  }
+
+  return {
+    title: 'Blog Post Not Found | w0pal',
+  };
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {

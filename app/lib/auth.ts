@@ -51,10 +51,10 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, user }) {
       if (session.user) {
-        // @ts-ignore
+        // @ts-expect-error - id is not in default Session type
         session.user.id = user.id;
         // Add isAdmin flag to session
-        // @ts-ignore
+        // @ts-expect-error - isAdmin is not in default Session type
         session.user.isAdmin = adminEmails.includes(user.email || '');
       }
       return session;

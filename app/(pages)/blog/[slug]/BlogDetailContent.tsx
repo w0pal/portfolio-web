@@ -262,9 +262,11 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
               </div>
             ) : (
               // Local Content
-               <div
-                className={`prose max-w-none ${
-                    isDarkMode ? 'prose-invert' : ''
+              <div
+                className={`prose prose-lg max-w-none ${
+                  isDarkMode
+                    ? 'prose-invert text-gray-300 prose-headings:text-gray-100 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300'
+                    : 'text-gray-800 prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-black prose-code:text-blue-600'
                 }`}
                 dangerouslySetInnerHTML={{ __html: post.content || '' }}
               />

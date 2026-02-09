@@ -87,6 +87,7 @@ export default function PortfolioForm({ initialData, isEdit = false }: Portfolio
 
       router.refresh(); // Refresh server components
       router.push('/admin/portfolio');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {

@@ -73,6 +73,7 @@ export default function BlogPostForm({ initialData, isEdit = false }: BlogPostFo
 
       router.refresh();
       router.push('/admin/blog');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
