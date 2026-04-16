@@ -1,14 +1,14 @@
 import 'dotenv/config'
 import express from 'express'
-import session from 'express-session'
+import cookieSession from 'cookie-session'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import { Strategy as GitHubStrategy } from 'passport-github2'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { PrismaClient } from '@prisma/client'
-import blogRoutes from './routes/blog'
-import portfolioRoutes from './routes/portfolio'
-import { fetchMediumPostsInternal, generateSlug } from './lib/medium'
+import blogRoutes from './routes/blog.js'
+import portfolioRoutes from './routes/portfolio.js'
+import { fetchMediumPostsInternal, generateSlug } from './lib/medium.js'
 
 const app = express()
 const prisma = new PrismaClient()
@@ -16,18 +16,19 @@ const PORT = process.env.PORT || 3001
 
 const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').filter(Boolean)
 
+// Trust proxy necessary for Vercel/proxies to secure cookies and relative callback URLs
+app.set('trust proxy', 1)
+
 // Middleware
 app.use(express.json())
 app.use(cookieParser())
 app.use(
-  session({
-    secret: process.env.NEXTAUTH_SECRET || 'dev-secret-change-me',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    },
+  cookieSession({
+    name: 'session',
+    keys: [process.env.NEXTAUTH_SECRET || 'dev-secret-change-me'],
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   })
 )
 app.use(passport.initialize())
@@ -112,7 +113,7 @@ if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
       {
         clientID: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: `${process.env.NEXTAUTH_URL || 'http://localhost:5173'}/api/auth/github/callback`,
+        callbackURL: '/api/auth/github/callback',
         scope: ['user:email'],
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
@@ -134,7 +135,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.NEXTAUTH_URL || 'http://localhost:5173'}/api/auth/google/callback`,
+        callbackURL: '/api/auth/google/callback',
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
         try {
