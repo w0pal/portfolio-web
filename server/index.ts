@@ -264,7 +264,12 @@ app.get('/api/blog/:slug', async (req, res) => {
 app.use('/api/blog', blogRoutes)
 app.use('/api/portfolio', portfolioRoutes)
 
-// Start
-app.listen(PORT, () => {
-  console.log(`[server] Express running on http://localhost:${PORT}`)
-})
+// Start locally (Vercel will import the app directly)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[server] Express running on http://localhost:${PORT}`)
+  })
+}
+
+export default app
+
