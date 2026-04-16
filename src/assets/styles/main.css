@@ -137,23 +137,23 @@ img {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out;
+  animation: fadeInUp 0.4s ease-out;
   animation-fill-mode: both;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.6s ease-out;
+  animation: scaleIn 0.3s ease-out;
   animation-fill-mode: both;
 }
 
-.animation-delay-200 { animation-delay: 0.2s; }
-.animation-delay-300 { animation-delay: 0.3s; }
-.animation-delay-400 { animation-delay: 0.4s; }
-.animation-delay-600 { animation-delay: 0.6s; }
+.animation-delay-200 { animation-delay: 0.1s; }
+.animation-delay-300 { animation-delay: 0.15s; }
+.animation-delay-400 { animation-delay: 0.2s; }
+.animation-delay-600 { animation-delay: 0.3s; }
 
 /* ===== Container ===== */
 .container {
@@ -193,7 +193,7 @@ img {
 /* ===== Vue Router Transition ===== */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity 0.08s ease;
 }
 
 .page-enter-from,

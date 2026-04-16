@@ -1,4 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
+import PortfolioView from '@/views/PortfolioView.vue'
+import BlogView from '@/views/BlogView.vue'
+import BlogDetailView from '@/views/BlogDetailView.vue'
+import StatusView from '@/views/StatusView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -6,34 +12,34 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue'),
+      component: HomeView,
     },
     {
       path: '/about',
       name: 'about',
-      component: () => import('@/views/AboutView.vue'),
+      component: AboutView,
     },
     {
       path: '/portfolio',
       name: 'portfolio',
-      component: () => import('@/views/PortfolioView.vue'),
+      component: PortfolioView,
     },
     {
       path: '/blog',
       name: 'blog',
-      component: () => import('@/views/BlogView.vue'),
+      component: BlogView,
     },
     {
       path: '/blog/:slug',
       name: 'blog-detail',
-      component: () => import('@/views/BlogDetailView.vue'),
+      component: BlogDetailView,
     },
     {
       path: '/status',
       name: 'status',
-      component: () => import('@/views/StatusView.vue'),
+      component: StatusView,
     },
-    // Admin routes
+    // Admin routes (lazy-loaded — rarely visited)
     {
       path: '/admin',
       component: () => import('@/views/admin/AdminLayout.vue'),
@@ -82,3 +88,4 @@ const router = createRouter({
 })
 
 export default router
+

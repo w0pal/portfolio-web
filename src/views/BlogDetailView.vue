@@ -119,187 +119,191 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- Loading -->
-  <div v-if="loading" class="container-narrow" style="padding: 3rem 1.5rem">
-    <div style="text-align: center; padding: 5rem; color: var(--text-muted)">Loading...</div>
-  </div>
+  <div>
+    <!-- Loading -->
+    <div v-if="loading" class="container-narrow" style="padding: 3rem 1.5rem">
+      <div style="text-align: center; padding: 5rem; color: var(--text-muted)">Loading...</div>
+    </div>
 
-  <!-- Not Found -->
-  <div v-else-if="notFound" class="container-narrow" style="padding: 3rem 1.5rem; text-align: center">
-    <h1 :style="{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }">
-      Post Not Found
-    </h1>
-    <router-link to="/blog" :style="{ color: 'var(--text-accent)', textDecoration: 'underline' }">
-      Back to Blog
-    </router-link>
-  </div>
-
-  <!-- Post Content -->
-  <template v-else-if="post">
-    <main class="container-narrow" style="padding: 2rem 1.5rem">
-      <!-- Back Button -->
-      <router-link
-        to="/blog"
-        class="animate-fade-in"
-        :style="{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          marginBottom: '2rem',
-          fontSize: '0.875rem',
-          fontWeight: 500,
-          color: 'var(--text-muted)',
-          textDecoration: 'none',
-          transition: 'color 0.2s',
-        }"
-      >
-        <ArrowLeft :size="18" />
-        <span>Kembali ke Blog</span>
+    <!-- Not Found -->
+    <div v-else-if="notFound" class="container-narrow" style="padding: 3rem 1.5rem; text-align: center">
+      <h1 :style="{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }">
+        Post Not Found
+      </h1>
+      <router-link to="/blog" :style="{ color: 'var(--text-accent)', textDecoration: 'underline' }">
+        Back to Blog
       </router-link>
+    </div>
 
-      <article class="animate-fade-in-up">
-        <!-- Thumbnail -->
-        <div v-if="post.coverImage" style="position: relative; width: 100%; height: 20rem; border-radius: 0.75rem; overflow: hidden; margin-bottom: 2rem">
-          <img :src="post.coverImage" :alt="post.title" style="width: 100%; height: 100%; object-fit: cover" />
-        </div>
-
-        <!-- Title -->
-        <h1
+    <!-- Post Content -->
+    <template v-else-if="post">
+      <main class="container-narrow" style="padding: 2rem 1.5rem">
+        <!-- Back Button -->
+        <router-link
+          to="/blog"
+          class="animate-fade-in"
           :style="{
-            fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
-            fontWeight: 700,
-            marginBottom: '1.5rem',
-            lineHeight: 1.3,
-            color: 'var(--text-primary)',
-          }"
-        >
-          {{ post.title }}
-        </h1>
-
-        <!-- Meta Info -->
-        <div
-          :style="{
-            display: 'flex',
-            flexWrap: 'wrap',
+            display: 'inline-flex',
             alignItems: 'center',
-            gap: '1rem',
+            gap: '0.5rem',
             marginBottom: '2rem',
-            paddingBottom: '2rem',
-            borderBottom: '1px solid var(--border-primary)',
+            fontSize: '0.875rem',
+            fontWeight: 500,
             color: 'var(--text-muted)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
           }"
         >
-          <div style="display: flex; align-items: center; gap: 0.5rem">
-            <User :size="16" />
-            <span>{{ post.author || 'Naufal' }}</span>
+          <ArrowLeft :size="18" />
+          <span>Kembali ke Blog</span>
+        </router-link>
+
+        <article class="animate-fade-in-up">
+          <!-- Thumbnail -->
+          <div v-if="post.coverImage" style="position: relative; width: 100%; height: 20rem; border-radius: 0.75rem; overflow: hidden; margin-bottom: 2rem">
+            <img :src="post.coverImage" :alt="post.title" style="width: 100%; height: 100%; object-fit: cover" />
           </div>
-          <div style="display: flex; align-items: center; gap: 0.5rem">
-            <Calendar :size="16" />
-            <span>{{ date }}</span>
-          </div>
-          <div
-            v-if="post.categories && post.categories.length > 0"
-            style="display: flex; align-items: center; gap: 0.5rem"
-          >
-            <Tag :size="16" />
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
-              <span
-                v-for="(cat, i) in post.categories"
-                :key="i"
-                :style="{
-                  padding: '0.125rem 0.5rem',
-                  fontSize: '0.75rem',
-                  borderRadius: '9999px',
-                  background: 'var(--badge-bg)',
-                }"
-              >
-                {{ cat }}
-              </span>
-            </div>
-          </div>
-          <div
+
+          <!-- Title -->
+          <h1
             :style="{
-              padding: '0.125rem 0.5rem',
-              fontSize: '0.75rem',
-              borderRadius: '9999px',
-              background: isMedium ? '#000' : 'var(--accent-bg)',
-              color: isMedium ? '#fff' : 'var(--accent-text)',
+              fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+              fontWeight: 700,
+              marginBottom: '1.5rem',
+              lineHeight: 1.3,
+              color: 'var(--text-primary)',
             }"
           >
-            {{ isMedium ? 'Medium' : 'Local' }}
-          </div>
-        </div>
+            {{ post.title }}
+          </h1>
 
-        <!-- Content -->
-        <div style="position: relative; margin-bottom: 2rem">
-          <template v-if="isMedium">
+          <!-- Meta Info -->
+          <div
+            :style="{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: '1rem',
+              marginBottom: '2rem',
+              paddingBottom: '2rem',
+              borderBottom: '1px solid var(--border-primary)',
+              color: 'var(--text-muted)',
+            }"
+          >
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <User :size="16" />
+              <span>{{ post.author || 'Naufal' }}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <Calendar :size="16" />
+              <span>{{ date }}</span>
+            </div>
             <div
-              class="prose-content"
-              :style="{ color: 'var(--text-secondary)' }"
-              v-html="formattedContent"
-            />
-            <!-- Fade overlay -->
+              v-if="post.categories && post.categories.length > 0"
+              style="display: flex; align-items: center; gap: 0.5rem"
+            >
+              <Tag :size="16" />
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+                <span
+                  v-for="(cat, i) in post.categories"
+                  :key="i"
+                  :style="{
+                    padding: '0.125rem 0.5rem',
+                    fontSize: '0.75rem',
+                    borderRadius: '9999px',
+                    background: 'var(--badge-bg)',
+                  }"
+                >
+                  {{ cat }}
+                </span>
+              </div>
+            </div>
             <div
               :style="{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '5rem',
-                background: 'linear-gradient(to top, var(--bg-primary), transparent)',
-                pointerEvents: 'none',
-              }"
-            />
-            <!-- Read more -->
-            <div
-              :style="{
-                marginTop: '2rem',
-                padding: '1.5rem',
-                borderRadius: '0.75rem',
-                textAlign: 'center',
-                background: 'var(--bg-card)',
+                padding: '0.125rem 0.5rem',
+                fontSize: '0.75rem',
+                borderRadius: '9999px',
+                background: isMedium ? '#000' : 'var(--accent-bg)',
+                color: isMedium ? '#fff' : 'var(--accent-text)',
               }"
             >
-              <p :style="{ marginBottom: '1rem', color: 'var(--text-secondary)' }">
-                Artikel ini dipublikasikan di Medium. Klik tombol di bawah untuk membaca selengkapnya.
-              </p>
-              <a
-                :href="post.originalLink || '#'"
-                target="_blank"
-                rel="noopener noreferrer"
+              {{ isMedium ? 'Medium' : 'Local' }}
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div style="position: relative; margin-bottom: 2rem">
+            <template v-if="isMedium">
+              <div
+                class="prose-content"
+                :style="{ color: 'var(--text-secondary)' }"
+                v-html="formattedContent"
+              />
+              <!-- Fade overlay -->
+              <div
                 :style="{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '0.5rem',
-                  fontWeight: 500,
-                  transition: 'all 0.2s',
-                  textDecoration: 'none',
-                  background: 'var(--text-accent)',
-                  color: '#fff',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '5rem',
+                  background: 'linear-gradient(to top, var(--bg-primary), transparent)',
+                  pointerEvents: 'none',
+                }"
+              />
+              <!-- Read more -->
+              <div
+                :style="{
+                  marginTop: '2rem',
+                  padding: '1.5rem',
+                  borderRadius: '0.75rem',
+                  textAlign: 'center',
+                  background: 'var(--bg-card)',
                 }"
               >
-                <span>Baca Selengkapnya di Medium</span>
-                <ExternalLink :size="18" />
-              </a>
-            </div>
-          </template>
+                <p :style="{ marginBottom: '1rem', color: 'var(--text-secondary)' }">
+                  Artikel ini dipublikasikan di Medium. Klik tombol di bawah untuk membaca selengkapnya.
+                </p>
+                <a
+                  :href="post.originalLink || '#'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  :style="{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    fontWeight: 500,
+                    transition: 'all 0.2s',
+                    textDecoration: 'none',
+                    background: 'var(--text-accent)',
+                    color: '#fff',
+                  }"
+                >
+                  <span>Baca Selengkapnya di Medium</span>
+                  <ExternalLink :size="18" />
+                </a>
+              </div>
+            </template>
 
-          <template v-else>
-            <div
-              class="prose-content"
-              :style="{ color: 'var(--text-secondary)' }"
-              v-html="formattedContent"
-            />
-          </template>
-        </div>
+            <template v-else>
+              <div
+                class="prose-content"
+                :style="{ color: 'var(--text-secondary)' }"
+                v-html="formattedContent"
+              />
+            </template>
+          </div>
 
-        <!-- Comments (local posts only) -->
-        <CommentSection v-if="!isMedium" :slug="post.slug" />
-      </article>
-    </main>
+          <!-- Comments (local posts only) -->
+          <CommentSection v-if="!isMedium" :slug="post.slug" />
+        </article>
+      </main>
 
-    <AppFooter />
-  </template>
+      <div style="margin-top: 3rem">
+        <AppFooter />
+      </div>
+    </template>
+  </div>
 </template>

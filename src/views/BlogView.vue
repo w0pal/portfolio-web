@@ -130,8 +130,11 @@ onMounted(async () => {
         </p>
       </div>
     </template>
+    
+    <div style="margin-top: 3rem">
+      <AppFooter />
+    </div>
   </main>
-  <AppFooter />
 </template>
 
 <style scoped>

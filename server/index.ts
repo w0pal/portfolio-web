@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
@@ -112,14 +113,10 @@ if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
         clientID: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
         callbackURL: `${process.env.NEXTAUTH_URL || 'http://localhost:5173'}/api/auth/github/callback`,
+        scope: ['user:email'],
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
         try {
-          const email = profile.emails?.[0]?.value
-          // GitHub - admin only
-          if (adminEmails.length > 0 && email && !adminEmails.includes(email)) {
-            return done(null, false, { message: 'Not authorized' })
-          }
           const user = await findOrCreateUser(profile, 'github', profile.id, accessToken, refreshToken)
           done(null, user)
         } catch (err) {
@@ -193,7 +190,7 @@ app.get('/api/blog', async (req, res) => {
       orderBy: { createdAt: 'desc' },
     })
 
-    const mediumUsername = process.env.NEXT_PUBLIC_MEDIUM_USERNAME || process.env.VITE_MEDIUM_USERNAME || ''
+    const mediumUsername = process.env.MEDIUM_USERNAME || process.env.VITE_MEDIUM_USERNAME || ''
     let mediumPosts: any[] = []
     try {
       const raw = await fetchMediumPostsInternal(mediumUsername)
@@ -236,7 +233,7 @@ app.get('/api/blog/:slug', async (req, res) => {
     if (dbPost) return res.json(dbPost)
 
     // Try Medium
-    const mediumUsername = process.env.NEXT_PUBLIC_MEDIUM_USERNAME || process.env.VITE_MEDIUM_USERNAME || ''
+    const mediumUsername = process.env.MEDIUM_USERNAME || process.env.VITE_MEDIUM_USERNAME || ''
     const mediumPosts = await fetchMediumPostsInternal(mediumUsername)
     const mediumPost = mediumPosts.find((p) => p.slug === slug)
 

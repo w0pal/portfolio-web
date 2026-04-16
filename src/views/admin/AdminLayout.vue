@@ -27,15 +27,41 @@ onMounted(async () => {
     })
   }
 
-  // Redirect non-admins
-  if (!auth.isAdmin) {
-    router.push('/')
-  }
+  // Note: Redirect logic removed. We now handle non-admins and unauthenticated users in the template.
 })
 </script>
 
 <template>
-  <div style="display: flex; min-height: 100vh; background: var(--bg-secondary)">
+  <div>
+  <!-- Loading state -->
+  <div v-if="auth.loading" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-secondary)">
+    <p :style="{ color: 'var(--text-muted)', fontSize: '1.125rem' }">Loading...</p>
+  </div>
+
+  <!-- Not authenticated -->
+  <div v-else-if="!auth.isAuthenticated" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 1.5rem; background: var(--bg-secondary)">
+    <h1 :style="{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }">Admin Panel</h1>
+    <p :style="{ color: 'var(--text-muted)' }">Please sign in to access the admin panel.</p>
+    <div style="display: flex; gap: 1rem">
+      <a href="/api/auth/github" :style="{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#24292e', color: '#fff', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 500 }">
+        Sign in with GitHub
+      </a>
+      <a href="/api/auth/google" :style="{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#fff', color: '#374151', border: '1px solid #d1d5db', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 500 }">
+        Sign in with Google
+      </a>
+    </div>
+    <router-link to="/" :style="{ color: 'var(--text-accent)', textDecoration: 'underline', marginTop: '1rem' }">← Back to Home</router-link>
+  </div>
+
+  <!-- Not admin -->
+  <div v-else-if="!auth.isAdmin" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 1rem; background: var(--bg-secondary)">
+    <h1 :style="{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }">Access Denied</h1>
+    <p :style="{ color: 'var(--text-muted)' }">You don't have admin access.</p>
+    <router-link to="/" :style="{ color: 'var(--text-accent)', textDecoration: 'underline' }">← Back to Home</router-link>
+  </div>
+
+  <!-- Admin layout -->
+  <div v-else style="display: flex; min-height: 100vh; background: var(--bg-secondary)">
     <!-- Mobile Header -->
     <header
       style="
@@ -221,6 +247,7 @@ onMounted(async () => {
     <main class="admin-main" style="flex: 1; padding: 2rem">
       <router-view />
     </main>
+  </div>
   </div>
 </template>
 
