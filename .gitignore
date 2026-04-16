@@ -19,6 +19,11 @@
 
 # production
 /build
+dist/
+
+# backup (temporary)
+/_nextjs_backup
+/app
 
 # misc
 .DS_Store
