@@ -13,7 +13,6 @@ import { fetchMediumPostsInternal, generateSlug } from './lib/medium.js'
 const app = express()
 const prisma = new PrismaClient()
 const PORT = process.env.PORT || 3001
-
 const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').filter(Boolean)
 
 // Trust proxy necessary for Vercel/proxies to secure cookies and relative callback URLs
@@ -31,6 +30,18 @@ app.use(
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   })
 )
+
+// Polyfill regenerate and save for cookie-session (required by passport >= 0.6.0)
+app.use((req: any, res, next) => {
+  if (req.session && !req.session.regenerate) {
+    req.session.regenerate = (cb: any) => cb()
+  }
+  if (req.session && !req.session.save) {
+    req.session.save = (cb: any) => cb()
+  }
+  next()
+})
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -113,7 +124,7 @@ if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
       {
         clientID: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: '/api/auth/github/callback',
+        callbackURL: process.env.NEXTAUTH_URL ? `${process.env.NEXTAUTH_URL}/api/auth/github/callback` : '/api/auth/github/callback',
         scope: ['user:email'],
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
@@ -135,7 +146,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/api/auth/google/callback',
+        callbackURL: process.env.NEXTAUTH_URL ? `${process.env.NEXTAUTH_URL}/api/auth/google/callback` : '/api/auth/google/callback',
       },
       async (accessToken: string, refreshToken: string, profile: any, done: any) => {
         try {
