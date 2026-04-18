@@ -60,7 +60,7 @@ model PortfolioItem {
   description String
   link        String?
   imageUrl    String?
-  tags        String   // Stored as JSON string or comma-separated
+  tags        String // Stored as JSON string or comma-separated
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -70,10 +70,10 @@ model BlogPost {
   title        String
   slug         String    @unique
   description  String?
-  content      String?   // For local posts
+  content      String? // For local posts
   coverImage   String?
   source       String    @default("LOCAL") // "LOCAL" or "MEDIUM"
-  originalLink String?   // For Medium posts
+  originalLink String? // For Medium posts
   published    Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -81,12 +81,19 @@ model BlogPost {
 }
 
 model Comment {
-  id         String   @id @default(cuid())
-  content    String
-  createdAt  DateTime @default(now())
-  postId     String
-  authorId   String
-  
-  post       BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  postId    String
+  authorId  String
+
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model PageContent {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  content   String // JSON string containing page data
+  updatedAt DateTime @updatedAt
 }

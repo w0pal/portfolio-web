@@ -269,6 +269,7 @@ onUnmounted(() => {
         <!-- Theme Toggle -->
         <button
           @click="theme.cycleTheme()"
+          class="desktop-only-btn"
           style="
             padding: 0.5rem;
             border-radius: 0.5rem;
@@ -363,6 +364,11 @@ onUnmounted(() => {
     display: flex !important;
   }
   .mobile-menu-btn {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .desktop-only-btn {
     display: none !important;
   }
 }

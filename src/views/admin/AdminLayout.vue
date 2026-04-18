@@ -12,6 +12,8 @@ const navLinks = [
   { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/admin/portfolio', icon: Image, label: 'Portfolio' },
   { href: '/admin/blog', icon: FileText, label: 'Blog' },
+  { href: '/admin/about', icon: FileText, label: 'About Page' },
+  { href: '/admin/status', icon: FileText, label: 'Status Page' },
 ]
 
 onMounted(async () => {

@@ -1,18 +1,32 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { Target, Heart } from 'lucide-vue-next'
 import AppFooter from '@/components/AppFooter.vue'
 
-const goals = [
+const goals = ref([
   'Lulus kuliah menggunakan Linux (jurnal, skripsi, etc)',
   'Konsisten daily photo di Instagram',
-]
+])
 
-const interests = [
+const interests = ref([
   'Street photography',
   'PC building & optimization',
   'Linux customization',
   'Web development',
-]
+])
+
+onMounted(async () => {
+  try {
+    const res = await fetch('/api/content/status')
+    if (res.ok) {
+      const data = await res.json()
+      if (data.goals && data.goals.length > 0) goals.value = data.goals
+      if (data.interests && data.interests.length > 0) interests.value = data.interests
+    }
+  } catch (e) {
+    console.error('Failed to fetch status content', e)
+  }
+})
 </script>
 
 <template>

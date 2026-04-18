@@ -8,6 +8,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { PrismaClient } from '@prisma/client'
 import blogRoutes from './routes/blog.js'
 import portfolioRoutes from './routes/portfolio.js'
+import pageContentRoutes from './routes/pageContent.js'
 import { fetchMediumPostsInternal, generateSlug } from './lib/medium.js'
 
 const app = express()
@@ -275,6 +276,7 @@ app.get('/api/blog/:slug', async (req, res) => {
 // Mount remaining CRUD routes
 app.use('/api/blog', blogRoutes)
 app.use('/api/portfolio', portfolioRoutes)
+app.use('/api/content', pageContentRoutes)
 
 // Start locally (Vercel will import the app directly)
 if (!process.env.VERCEL) {

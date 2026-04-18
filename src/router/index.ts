@@ -79,6 +79,16 @@ const router = createRouter({
           name: 'admin-blog-edit',
           component: () => import('@/views/admin/AdminBlogForm.vue'),
         },
+        {
+          path: 'about',
+          name: 'admin-about',
+          component: () => import('@/views/admin/AdminAboutSettings.vue'),
+        },
+        {
+          path: 'status',
+          name: 'admin-status',
+          component: () => import('@/views/admin/AdminStatusSettings.vue'),
+        },
       ],
     },
   ],

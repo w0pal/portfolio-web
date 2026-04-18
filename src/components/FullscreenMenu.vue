@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { X } from 'lucide-vue-next'
+import { X, Sun, Moon, Monitor } from 'lucide-vue-next'
 import { useThemeStore } from '@/stores/theme'
 import { navLinks } from '@/config/navigation'
 
@@ -114,5 +114,53 @@ const theme = useThemeStore()
         <span style="font-weight: 500">{{ link.label }}</span>
       </router-link>
     </nav>
+
+    <!-- Theme Selection container at the bottom -->
+    <div
+      :style="{
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        padding: '1.5rem',
+        borderTop: '1px solid var(--border-primary)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }"
+    >
+      <span :style="{ fontWeight: 500, color: 'var(--text-secondary)' }">Theme</span>
+      <div style="display: flex; gap: 0.5rem">
+        <button
+          @click="theme.setTheme('light')"
+          :style="{
+            padding: '0.5rem', borderRadius: '0.5rem', border: 'none', cursor: 'pointer',
+            background: theme.themeMode === 'light' ? 'var(--badge-bg)' : 'transparent',
+            color: theme.themeMode === 'light' ? 'var(--text-primary)' : 'var(--text-muted)'
+          }"
+        >
+          <Sun :size="18" />
+        </button>
+        <button
+          @click="theme.setTheme('dark')"
+          :style="{
+            padding: '0.5rem', borderRadius: '0.5rem', border: 'none', cursor: 'pointer',
+            background: theme.themeMode === 'dark' ? 'var(--badge-bg)' : 'transparent',
+            color: theme.themeMode === 'dark' ? 'var(--text-primary)' : 'var(--text-muted)'
+          }"
+        >
+          <Moon :size="18" />
+        </button>
+        <button
+          @click="theme.setTheme('system')"
+          :style="{
+            padding: '0.5rem', borderRadius: '0.5rem', border: 'none', cursor: 'pointer',
+            background: theme.themeMode === 'system' ? 'var(--badge-bg)' : 'transparent',
+            color: theme.themeMode === 'system' ? 'var(--text-primary)' : 'var(--text-muted)'
+          }"
+        >
+          <Monitor :size="18" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
