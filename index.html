@@ -1,36 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="theme-color" content="#1e293b" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e293b" />
+    <meta name="theme-color" content="#0d1117" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="description" content="The personal website and blog of w0pal." />
-    <title>w0pal's Website</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <!--
-      Synchronous theme initialization — prevents the "flashbang" effect.
-      Runs BEFORE Vue mounts, so the correct background is applied instantly.
-    -->
-    <script>
-      (function() {
-        var theme = localStorage.getItem('theme') || 'system';
-        var isDark = theme === 'dark' ||
-          (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        // Set theme-color meta immediately
-        var metas = document.querySelectorAll('meta[name="theme-color"]');
-        var color = isDark ? '#1e293b' : '#ffffff';
-        metas.forEach(function(m) { m.setAttribute('content', color); });
-      })();
-    </script>
+    <title>w0pal</title>
   </head>
   <body>
     <div id="app"></div>

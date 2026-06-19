@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/admin/blog', icon: FileText, label: 'Blog' },
   { href: '/admin/about', icon: FileText, label: 'About Page' },
   { href: '/admin/status', icon: FileText, label: 'Status Page' },
+  { href: '/admin/pages', icon: FileText, label: 'Pages' },
 ]
 
 onMounted(async () => {

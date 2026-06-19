@@ -1,81 +1,34 @@
 import { defineStore } from 'pinia'
-import { ref, computed, watch, onMounted } from 'vue'
-
-export type ThemeMode = 'system' | 'light' | 'dark'
+import { ref } from 'vue'
 
 export const useThemeStore = defineStore('theme', () => {
-  const themeMode = ref<ThemeMode>('system')
-  const systemPrefersDark = ref(false)
-  const mounted = ref(false)
+  const STORAGE_KEY = 'theme-preference'
 
-  const isDarkMode = computed(() => {
-    if (themeMode.value === 'system') return systemPrefersDark.value
-    return themeMode.value === 'dark'
-  })
+  const isDarkMode = ref(true)
 
-  function setTheme(mode: ThemeMode) {
-    themeMode.value = mode
-    localStorage.setItem('theme', mode)
+  function init() {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored === 'light' || stored === 'dark') {
+      isDarkMode.value = stored === 'dark'
+    } else {
+      isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
     applyTheme()
   }
 
-  function cycleTheme() {
-    if (themeMode.value === 'light') setTheme('dark')
-    else if (themeMode.value === 'dark') setTheme('system')
-    else setTheme('light')
+  function toggle() {
+    isDarkMode.value = !isDarkMode.value
+    localStorage.setItem(STORAGE_KEY, isDarkMode.value ? 'dark' : 'light')
+    applyTheme()
   }
 
   function applyTheme() {
-    const dark = isDarkMode.value
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-
-    // Update theme-color meta tags
-    const metas = document.querySelectorAll('meta[name="theme-color"]')
-    const color = dark ? '#1e293b' : '#ffffff'
-    metas.forEach((m) => m.setAttribute('content', color))
-
-    // Update apple status bar
-    const appleStatusBar = document.querySelector(
-      'meta[name="apple-mobile-web-app-status-bar-style"]'
-    )
-    if (appleStatusBar) {
-      appleStatusBar.setAttribute('content', dark ? 'black-translucent' : 'default')
-    }
+    document.documentElement.setAttribute('data-theme', isDarkMode.value ? 'dark' : 'light')
   }
-
-  function init() {
-    // Read from localStorage
-    const saved = localStorage.getItem('theme') as ThemeMode | null
-    if (saved && ['system', 'light', 'dark'].includes(saved)) {
-      themeMode.value = saved
-    }
-
-    // Check system preference
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    systemPrefersDark.value = mediaQuery.matches
-
-    mediaQuery.addEventListener('change', (e) => {
-      systemPrefersDark.value = e.matches
-      if (themeMode.value === 'system') {
-        applyTheme()
-      }
-    })
-
-    applyTheme()
-    mounted.value = true
-  }
-
-  // Watch for reactive changes
-  watch(isDarkMode, () => {
-    applyTheme()
-  })
 
   return {
-    themeMode,
     isDarkMode,
-    mounted,
-    setTheme,
-    cycleTheme,
     init,
+    toggle,
   }
 })

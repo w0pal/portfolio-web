@@ -1,120 +1,90 @@
 <script setup lang="ts">
-import { ArrowRight, Sparkles } from 'lucide-vue-next'
-import AppFooter from '@/components/AppFooter.vue'
-import { navLinks } from '@/config/navigation'
-
-const portfolioLink = navLinks.find((l) => l.label === 'Portfolio')
-const aboutLink = navLinks.find((l) => l.label === 'About')
+const socialLinks = [
+  { href: 'https://github.com/w0pal', label: 'GitHub' },
+  { href: 'https://instagram.com/w0pal', label: 'Instagram' },
+  { href: 'https://linkedin.com/in/w0pal', label: 'LinkedIn' },
+  { href: 'mailto:me@w0pal.xyz', label: 'email' },
+]
 </script>
 
 <template>
-  <div>
-    <main
-      class="container"
-      style="
-        min-height: 80vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        z-index: 10;
-      "
-    >
-      <!-- Update Badge -->
-      <div
-        class="animate-fade-in-up"
-        :style="{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          padding: '0.5rem 1rem',
-          borderRadius: '9999px',
-          marginBottom: '2rem',
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-primary)',
-        }"
-      >
-        <Sparkles :size="14" :style="{ color: 'var(--text-accent)' }" />
-        <span :style="{ fontSize: '0.875rem', color: 'var(--text-secondary)' }">Personal Website</span>
-      </div>
+  <main class="container page">
+    <h1 class="greeting">hey, i'm w0pal.</h1>
+    <p class="tagline">informatics, linux, and street photography.</p>
 
-      <!-- Main Title -->
-      <h1
-        class="animate-fade-in-up animation-delay-200"
-        :style="{
-          fontSize: 'clamp(3rem, 8vw, 6rem)',
-          fontWeight: 700,
-          textAlign: 'center',
-          marginBottom: '1.5rem',
-          color: 'var(--text-primary)',
-        }"
-      >
-        w0pal
-      </h1>
+    <p class="bio">
+      I like building things, breaking stuff (sometimes), and figuring out how things work.
+      Most of what I build comes from curiosity — trying to solve my own problems
+      or exploring ideas that seem interesting at the time.
+      Some of it turns into websites, software, scripts, and Linux customization.
+    </p>
 
-      <!-- Tagline -->
-      <p
-        class="animate-fade-in-up animation-delay-400"
-        :style="{
-          fontSize: 'clamp(1.125rem, 3vw, 1.5rem)',
-          textAlign: 'center',
-          marginBottom: '2.5rem',
-          maxWidth: '42rem',
-          color: 'var(--text-secondary)',
-        }"
-      >
-        Mahasiswa Informatika • PC Enthusiast • Street Photographer
-      </p>
+    <p class="bio">
+      Outside of that, I take street photos, binge anime, and occasionally
+      spend time on PC building.
+    </p>
 
-      <!-- CTA Buttons -->
-      <div
-        class="animate-fade-in-up animation-delay-600"
-        style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 4rem"
-      >
-        <router-link
-          :to="portfolioLink?.href || '/portfolio'"
-          :style="{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.75rem 1.5rem',
-            borderRadius: '0.5rem',
-            fontWeight: 500,
-            transition: 'all 0.2s',
-            textDecoration: 'none',
-            background: 'var(--text-primary)',
-            color: 'var(--bg-primary)',
-          }"
-        >
-          <span>Lihat {{ portfolioLink?.label || 'Portfolio' }}</span>
-          <ArrowRight :size="18" />
-        </router-link>
-
-        <router-link
-          :to="aboutLink?.href || '/about'"
-          :style="{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.75rem 1.5rem',
-            borderRadius: '0.5rem',
-            fontWeight: 500,
-            transition: 'all 0.2s',
-            textDecoration: 'none',
-            border: '1px solid var(--border-primary)',
-            background: 'var(--bg-card)',
-            color: 'var(--text-primary)',
-          }"
-        >
-          <span>{{ aboutLink?.label || 'About' }}</span>
-          <ArrowRight :size="18" />
-        </router-link>
-      </div>
-    </main>
-
-    <div class="container" style="padding-top: 2rem; padding-bottom: 2rem; position: relative; z-index: 10">
-      <AppFooter />
+    <div class="links">
+      <a
+        v-for="link in socialLinks"
+        :key="link.label"
+        :href="link.href"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link-btn"
+      >{{ link.label }}</a>
     </div>
-  </div>
+  </main>
 </template>
+
+<style scoped>
+.page {
+  padding: 5rem 1.5rem 2rem;
+}
+
+.greeting {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.bio {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 66ch;
+  margin-bottom: 1.25rem;
+  text-wrap: pretty;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.link-btn {
+  display: inline-block;
+  padding: 0.4375rem 1rem;
+  font-size: 0.8125rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.375rem;
+  color: var(--text-primary);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.link-btn:hover {
+  background: var(--bg-surface);
+  border-color: var(--text-muted);
+}
+</style>

@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-19T00:00:00.000Z",
+  "title": "Design System: portfolio-web",
+  "extensions": {
+    "colorMeta": {
+      "bg-primary": {
+        "role": "neutral",
+        "displayName": "Canvas White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#0b0f14", "#1d2430", "#2f394a", "#4b5563", "#6b7280", "#9ca3af", "#d1d5db", "#ffffff"]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Ink 900",
+        "canonical": "#111827",
+        "tonalRamp": ["#0a0f1a", "#111827", "#1f2937", "#374151", "#4b5563", "#6b7280", "#9ca3af", "#d1d5db"]
+      },
+      "text-accent": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "#2563eb",
+        "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#dbeafe"]
+      },
+      "dark-bg-primary": {
+        "role": "neutral",
+        "displayName": "Night Base",
+        "canonical": "#0f172a",
+        "tonalRamp": ["#020617", "#0f172a", "#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1"]
+      },
+      "dark-text-accent": {
+        "role": "primary",
+        "displayName": "Signal Cyan",
+        "canonical": "#22d3ee",
+        "tonalRamp": ["#083344", "#0e7490", "#0891b2", "#06b6d4", "#22d3ee", "#67e8f9", "#a5f3fc", "#cffafe"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero name lockups and top-level landing emphasis."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles and major section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Primary reading text across portfolio and blog surfaces."
+      }
+    },
+    "shadows": [
+      {
+        "name": "overlay-lift",
+        "value": "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+        "purpose": "User dropdown and high-priority floating menu surfaces."
+      },
+      {
+        "name": "micro-lift",
+        "value": "0 1px 2px rgba(0, 0, 0, 0.05)",
+        "purpose": "Low-emphasis admin utility cards."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "ease-out",
+        "purpose": "Default transition timing for interactions and fades."
+      },
+      {
+        "name": "duration-fast",
+        "value": "0.2s",
+        "purpose": "Button, color, and opacity transitions."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call-to-action across hero and admin forms.",
+      "html": "<button class=\"ds-btn-primary\">Save Project</button>",
+      "css": ".ds-btn-primary { background: #2563eb; color: #ffffff; border: none; border-radius: 0.5rem; padding: 0.75rem 1.5rem; font: 500 0.875rem Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; cursor: pointer; transition: background-color 0.2s ease-out, opacity 0.2s ease-out; } .ds-btn-primary:hover { background: #1d4ed8; } .ds-btn-primary:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary navigation action with neutral surface.",
+      "html": "<button class=\"ds-btn-secondary\">About</button>",
+      "css": ".ds-btn-secondary { background: #f9fafb; color: #111827; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 0.75rem 1.5rem; font: 500 0.875rem Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; cursor: pointer; transition: background-color 0.2s ease-out, border-color 0.2s ease-out; } .ds-btn-secondary:hover { background: #ffffff; border-color: #d1d5db; } .ds-btn-secondary:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Standard admin input field with neutral fill and clear border.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Project Title</span><input class=\"ds-input\" placeholder=\"e.g., Portfolio Website\" /></label>",
+      "css": ".ds-field { display: grid; gap: 0.25rem; } .ds-field-label { color: #4b5563; font: 500 0.875rem/1.2 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-input { width: 100%; background: #f9fafb; color: #111827; border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 0.5rem 1rem; font: 400 0.875rem/1.4 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-input:hover { border-color: #9ca3af; } .ds-input:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "badge-default",
+      "description": "Compact metadata chip for source/status tags.",
+      "html": "<span class=\"ds-chip\">Local</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 9999px; background: #dbeafe; color: #1d4ed8; padding: 0.125rem 0.5rem; font: 500 0.75rem/1.2 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Blog/project card shell with subtle border and roomy content area.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Card Title</h3><p class=\"ds-card-copy\">Short supporting description to preview content context.</p></article>",
+      "css": ".ds-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 1.5rem; } .ds-card-title { margin: 0 0 0.75rem; color: #111827; font: 700 1.25rem/1.3 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-card-copy { margin: 0; color: #4b5563; font: 400 0.875rem/1.75 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }"
+    },
+    {
+      "name": "Top Navigation Link",
+      "kind": "nav",
+      "refersTo": "button-secondary",
+      "description": "Compact nav item with muted default and high-contrast active state.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-link--active\" href=\"#\">Home</a><a class=\"ds-nav-link\" href=\"#\">Portfolio</a></nav>",
+      "css": ".ds-nav { display: inline-flex; gap: 0.25rem; } .ds-nav-link { padding: 0.5rem 1rem; border-radius: 0.5rem; color: #6b7280; text-decoration: none; font: 500 0.875rem/1.2 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; transition: color 0.2s ease-out, background-color 0.2s ease-out; } .ds-nav-link:hover { color: #111827; background: #f9fafb; } .ds-nav-link--active { color: #111827; } .ds-nav-link:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Signal Grid",
+    "overview": "This system is a calm technical shell for a personal archive. It uses restrained surfaces, low-noise neutrals, and precise accents to make projects and writing feel trustworthy rather than promotional. The interface should read as maintained engineering work: clear structure, visible state, and no decorative detours.\n\nDensity stays practical and compact, with cards, forms, and nav elements tuned for frequent use on both public and admin surfaces. Contrast is intentionally stronger than soft-minimal portfolios, especially in dark mode and active states, so important actions and information remain legible under varied viewing conditions.\n\nThis system explicitly rejects ultra-corporate product-marketing polish. It should not feel like a generic enterprise landing template with sterile copy and detached brand voice.",
+    "keyCharacteristics": [
+      "Structural clarity over ornamental styling.",
+      "Technical color language with one active signal accent.",
+      "Compact spacing with consistent control sizing.",
+      "Public portfolio voice aligned with operational admin usability."
+    ],
+    "rules": [
+      {
+        "name": "The Single Signal Rule",
+        "body": "The interface uses one active accent family per theme; adding extra accent hues is prohibited unless a data-encoding requirement exists.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Ladder Rule",
+        "body": "Adjacent text roles must remain visibly distinct in both size and weight; flattening heading-to-body contrast is prohibited.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-Until-Interaction Rule",
+        "body": "Use borders and tonal contrast at rest; reserve stronger elevation for overlay or interaction states.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the one-accent strategy and use tokenized neutrals for most surfaces.",
+      "Do keep border contrast explicit (1px token borders) so structure stays readable in both themes.",
+      "Do maintain compact control sizing (0.5rem to 0.75rem vertical padding) for admin efficiency.",
+      "Do keep body and metadata text at accessible contrast; muted text must remain legible.",
+      "Do use clear heading-to-body hierarchy and avoid collapsing scale steps."
+    ],
+    "donts": [
+      "Don't drift into ultra-corporate styling, messaging cadence, or enterprise-template visual language.",
+      "Don't introduce multiple competing accent hues for decorative variety.",
+      "Don't remove visible focus treatment from interactive elements.",
+      "Don't rely on heavy shadows as a default depth system.",
+      "Don't replace tokenized neutrals with ad hoc hardcoded grays across components."
+    ]
+  }
+}
