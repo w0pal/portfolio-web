@@ -53,7 +53,7 @@ function closeMobile() {
     class="sidebar"
     :class="{ open: mobileOpen }"
   >
-    <div class="sidebar-inner">
+    <div class="sidebar-scroll">
       <router-link to="/" class="sidebar-brand">w0pal</router-link>
       <nav class="sidebar-nav">
         <router-link
@@ -67,31 +67,31 @@ function closeMobile() {
           {{ link.label }}
         </router-link>
       </nav>
-      <div class="sidebar-footer">
-        <button
-          class="theme-toggle"
-          @click="themeStore.toggle"
-          aria-label="Toggle theme"
-        >
-          <Sun v-if="!themeStore.isDarkMode" :size="14" />
-          <Moon v-else :size="14" />
-          <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }}</span>
-        </button>
-        <button
-          class="now-playing-toggle"
-          :class="{ active: nowPlayingVisible }"
-          @click="emit('toggle-now-playing')"
-          aria-label="Toggle now playing"
-        >
-          <Disc3 :size="14" />
-          <span>Now Playing</span>
-        </button>
-        <NowPlaying
-          v-if="nowPlayingVisible"
-          :username="lastfmUsername"
-          :api-key="lastfmApiKey"
-        />
-      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button
+        class="theme-toggle"
+        @click="themeStore.toggle"
+        aria-label="Toggle theme"
+      >
+        <Sun v-if="!themeStore.isDarkMode" :size="14" />
+        <Moon v-else :size="14" />
+        <span>{{ themeStore.isDarkMode ? 'Dark' : 'Light' }}</span>
+      </button>
+      <button
+        class="now-playing-toggle"
+        :class="{ active: nowPlayingVisible }"
+        @click="emit('toggle-now-playing')"
+        aria-label="Toggle now playing"
+      >
+        <Disc3 :size="14" />
+        <span>Now Playing</span>
+      </button>
+      <NowPlaying
+        v-if="nowPlayingVisible"
+        :username="lastfmUsername"
+        :api-key="lastfmApiKey"
+      />
     </div>
   </aside>
 </template>
@@ -153,6 +153,7 @@ function closeMobile() {
   z-index: 50;
   width: 14rem;
   height: 100vh;
+  height: 100dvh;
   background: var(--bg-primary);
   border-right: 1px solid var(--border-subtle);
   display: flex;
@@ -185,11 +186,13 @@ function closeMobile() {
 }
 
 .sidebar-inner {
+  display: none;
+}
+
+.sidebar-scroll {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 1.5rem;
   overflow-y: auto;
+  padding: 2rem 1.5rem 0;
 }
 
 .sidebar-brand {
@@ -221,11 +224,26 @@ function closeMobile() {
   color: var(--accent);
 }
 
+/* Mobile: compact layout */
+@media (max-width: 767px) {
+  .sidebar-scroll {
+    padding: 1.25rem 1.25rem 0;
+  }
+
+  .sidebar-brand {
+    margin-bottom: 1rem;
+  }
+
+  .nav-item {
+    padding: 0.375rem 0;
+  }
+}
+
 /* ===== Sidebar footer ===== */
 .sidebar-footer {
-  margin-top: auto;
-  padding-top: 1rem;
+  padding: 1rem 1.5rem 1.5rem;
   border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
 }
 
 .theme-toggle,
@@ -253,30 +271,15 @@ function closeMobile() {
   color: var(--accent);
 }
 
-/* Mobile: compact layout */
+/* Mobile: compact footer */
 @media (max-width: 767px) {
-  .sidebar-inner {
-    padding: 1rem 1.25rem;
-  }
-
-  .sidebar-brand {
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-  }
-
-  .nav-item {
-    padding: 0.25rem 0;
-    font-size: 0.8125rem;
-  }
-
   .sidebar-footer {
-    padding-top: 0.5rem;
+    padding: 0.75rem 1.25rem 1.25rem;
   }
 
   .theme-toggle,
   .now-playing-toggle {
-    padding: 0.25rem 0;
-    font-size: 0.8125rem;
+    padding: 0.375rem 0;
   }
 }
 </style>
