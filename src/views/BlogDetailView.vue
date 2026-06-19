@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ArrowLeft, Calendar, Tag, User, ExternalLink } from 'lucide-vue-next'
 import { blogPosts, type BlogPost } from '@/data/blog-posts'
+import { mediumPosts } from '@/data/medium-posts'
 
 const route = useRoute()
 const post = ref<BlogPost | null>(null)
@@ -86,7 +87,8 @@ const formattedContent = computed(() => {
 
 // Find the post by slug from static data
 const slug = route.params.slug as string
-const found = blogPosts.find((p) => p.slug === slug)
+const allPosts = [...blogPosts, ...mediumPosts]
+const found = allPosts.find((p) => p.slug === slug)
 if (found) {
   post.value = found
 } else {
