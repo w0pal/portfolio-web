@@ -188,8 +188,8 @@ function closeMobile() {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 2rem 1.5rem;
+  overflow-y: auto;
 }
 
 .sidebar-brand {

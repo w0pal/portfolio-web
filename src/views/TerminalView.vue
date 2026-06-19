@@ -40,11 +40,11 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 3.25rem);
-  background: #0d1117;
+  background: var(--bg-primary);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: #e6edf3;
+  color: var(--text-primary);
   cursor: text;
 }
 
@@ -68,19 +68,19 @@ onMounted(() => {
 }
 
 .line.system {
-  color: #3fb950;
+  color: var(--accent-green);
 }
 
 .line.input {
-  color: #e6edf3;
+  color: var(--text-primary);
 }
 
 .line.output {
-  color: #e6edf3;
+  color: var(--text-primary);
 }
 
 .line.error {
-  color: #f85149;
+  color: var(--accent-red);
 }
 
 .terminal-input-row {
@@ -88,11 +88,11 @@ onMounted(() => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1.5rem 1.25rem;
-  border-top: 1px solid #30363d;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .prompt {
-  color: #3fb950;
+  color: var(--accent-green);
   user-select: none;
   flex-shrink: 0;
 }
@@ -102,14 +102,14 @@ onMounted(() => {
   background: none;
   border: none;
   outline: none;
-  color: #e6edf3;
+  color: var(--text-primary);
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  caret-color: #58a6ff;
+  caret-color: var(--accent);
 }
 
 .terminal-input::placeholder {
-  color: #8b949e;
+  color: var(--text-muted);
 }
 </style>
