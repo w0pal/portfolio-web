@@ -252,4 +252,31 @@ function closeMobile() {
 .now-playing-toggle.active {
   color: var(--accent);
 }
+
+/* Mobile: compact layout */
+@media (max-width: 767px) {
+  .sidebar-inner {
+    padding: 1rem 1.25rem;
+  }
+
+  .sidebar-brand {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .nav-item {
+    padding: 0.25rem 0;
+    font-size: 0.8125rem;
+  }
+
+  .sidebar-footer {
+    padding-top: 0.5rem;
+  }
+
+  .theme-toggle,
+  .now-playing-toggle {
+    padding: 0.25rem 0;
+    font-size: 0.8125rem;
+  }
+}
 </style>
