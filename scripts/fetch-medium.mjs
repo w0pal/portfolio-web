@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import { config } from 'dotenv'
 
 config({ path: resolve(process.cwd(), '.env') })
+config({ path: resolve(process.cwd(), '.env.prod') })
 
 const username = process.env.VITE_MEDIUM_USERNAME
 if (!username) {
