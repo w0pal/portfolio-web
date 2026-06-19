@@ -1,10 +1,11 @@
 import { ref, computed } from 'vue'
 import { blogPosts as staticPosts, type BlogPost } from '@/data/blog-posts'
+import { mediumPosts } from '@/data/medium-posts'
 
 export type { BlogPost }
 
 export function useBlogPosts() {
-  const posts = ref<BlogPost[]>(staticPosts)
+  const posts = ref<BlogPost[]>([...staticPosts, ...mediumPosts])
   const searchQuery = ref('')
   const loading = ref(false)
 
