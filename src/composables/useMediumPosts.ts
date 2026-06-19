@@ -1,6 +1,5 @@
 import { ref, type Ref } from 'vue'
 import { XMLParser } from 'fast-xml-parser'
-import { mediumPosts as generatedMediumPosts } from '@/data/medium-posts'
 import type { BlogPost } from '@/data/blog-posts'
 
 const parser = new XMLParser({
@@ -40,36 +39,46 @@ function parseMediumItem(item: any): BlogPost {
   }
 }
 
+async function fetchFromRSS(): Promise<BlogPost[]> {
+  const res = await fetch('/api/medium/feed')
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const xml = await res.text()
+  const data = parser.parse(xml)
+  const items = data?.rss?.channel?.item
+  if (!items) return []
+  const list = Array.isArray(items) ? items : [items]
+  return list.map(parseMediumItem)
+}
+
+async function fetchFromJSON(): Promise<BlogPost[]> {
+  const res = await fetch('/data/medium-posts.json')
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  return res.json()
+}
+
 export function useMediumPosts() {
   if (!sharedPosts) {
-    sharedPosts = ref<BlogPost[]>([...generatedMediumPosts])
+    sharedPosts = ref<BlogPost[]>([])
     sharedLoading = ref(false)
     sharedError = ref<string | null>(null)
   }
 
-  if (import.meta.env.DEV && !fetchInitiated) {
+  if (!fetchInitiated) {
     fetchInitiated = true
     sharedLoading!.value = true
 
-    ;(async () => {
-      try {
-        const res = await fetch('/api/medium/feed')
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const xml = await res.text()
-        const data = parser.parse(xml)
-        const items = data?.rss?.channel?.item
-        if (items) {
-          const list = Array.isArray(items) ? items : [items]
-          sharedPosts!.value = list.map(parseMediumItem)
-        } else {
-          sharedPosts!.value = []
-        }
-      } catch (e: any) {
+    const fetcher = import.meta.env.DEV ? fetchFromRSS : fetchFromJSON
+
+    fetcher()
+      .then((data) => {
+        sharedPosts!.value = data
+      })
+      .catch((e: any) => {
         sharedError!.value = e.message
-      } finally {
+      })
+      .finally(() => {
         sharedLoading!.value = false
-      }
-    })()
+      })
   }
 
   return { posts: sharedPosts!, loading: sharedLoading!, error: sharedError! }
