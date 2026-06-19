@@ -1,13 +1,14 @@
 import { ref, computed } from 'vue'
 import { blogPosts as staticPosts, type BlogPost } from '@/data/blog-posts'
-import { mediumPosts } from '@/data/medium-posts'
+import { useMediumPosts } from './useMediumPosts'
 
 export type { BlogPost }
 
 export function useBlogPosts() {
-  const posts = ref<BlogPost[]>([...staticPosts, ...mediumPosts])
+  const { posts: mediumPosts, loading } = useMediumPosts()
   const searchQuery = ref('')
-  const loading = ref(false)
+
+  const posts = computed(() => [...staticPosts, ...mediumPosts.value])
 
   const filteredPosts = computed(() => {
     if (!searchQuery.value.trim()) return posts.value

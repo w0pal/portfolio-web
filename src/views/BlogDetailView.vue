@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { ArrowLeft, Calendar, Tag, User, ExternalLink } from 'lucide-vue-next'
 import { blogPosts, type BlogPost } from '@/data/blog-posts'
-import { mediumPosts } from '@/data/medium-posts'
+import { useMediumPosts } from '@/composables/useMediumPosts'
 
 const route = useRoute()
 const post = ref<BlogPost | null>(null)
@@ -85,15 +85,24 @@ const formattedContent = computed(() => {
   return post.value.content
 })
 
-// Find the post by slug from static data
+// Find the post by slug — live medium posts in dev, generated fallback in prod
+const { posts: mediumPosts, loading: mediumLoading } = useMediumPosts()
 const slug = route.params.slug as string
-const allPosts = [...blogPosts, ...mediumPosts]
-const found = allPosts.find((p) => p.slug === slug)
-if (found) {
-  post.value = found
-} else {
-  notFound.value = true
-}
+
+watch(
+  [mediumPosts, mediumLoading],
+  () => {
+    const allPosts = [...blogPosts, ...mediumPosts.value]
+    const found = allPosts.find((p) => p.slug === slug)
+    if (found) {
+      post.value = found
+      notFound.value = false
+    } else if (!mediumLoading.value) {
+      notFound.value = true
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
