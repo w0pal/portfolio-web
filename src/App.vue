@@ -8,7 +8,7 @@ const theme = useThemeStore()
 const route = useRoute()
 
 const isAdminRoute = computed(() => route.path.startsWith('/admin'))
-const nowPlayingVisible = ref(false)
+const nowPlayingVisible = ref(true)
 
 function toggleNowPlaying() {
   nowPlayingVisible.value = !nowPlayingVisible.value

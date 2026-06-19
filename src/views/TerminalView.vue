@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useInteractiveTerminal } from '@/composables/useInteractiveTerminal'
 
-const { lines, currentInput, outputRef, handleKeydown, focus } = useInteractiveTerminal()
+const { lines, currentInput, outputRef, handleKeydown, focus, prompt, ansiToHtml } = useInteractiveTerminal()
 
 onMounted(() => {
   focus()
@@ -17,20 +17,25 @@ onMounted(() => {
         :key="i"
         class="line"
         :class="line.type"
-      ><span>{{ line.text }}</span></p>
+      ><span v-html="ansiToHtml(line.text)"></span></p>
     </div>
 
     <div class="terminal-input-row">
-      <span class="prompt">$</span>
-      <input
-        v-model="currentInput"
-        type="text"
-        class="terminal-input"
-        autocomplete="off"
-        autocapitalize="off"
-        spellcheck="false"
-        @keydown="handleKeydown"
-      />
+      <div class="prompt-block">
+        <div class="prompt-info">{{ prompt }}</div>
+        <div class="prompt-input-line">
+          <span class="prompt-char">%</span>
+          <input
+            v-model="currentInput"
+            type="text"
+            class="terminal-input"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            @keydown="handleKeydown"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,17 +45,20 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 3.25rem);
+  min-height: calc(100dvh - 3.25rem);
   background: var(--bg-primary);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--text-primary);
   cursor: text;
+  overscroll-behavior: none;
 }
 
 @media (min-width: 768px) {
   .terminal-page {
     min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
@@ -84,17 +92,34 @@ onMounted(() => {
 }
 
 .terminal-input-row {
+  padding: 0 1.5rem 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.prompt-block {
+  padding-top: 0.5rem;
+}
+
+.prompt-info {
+  color: var(--accent-green);
+  font-size: 0.75rem;
+  user-select: none;
+  line-height: 1.8;
+}
+
+.prompt-input-line {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1.5rem 1.25rem;
-  border-top: 1px solid var(--border-subtle);
 }
 
-.prompt {
+.prompt-char {
   color: var(--accent-green);
   user-select: none;
   flex-shrink: 0;
+  font-weight: 700;
 }
 
 .terminal-input {
@@ -112,4 +137,25 @@ onMounted(() => {
 .terminal-input::placeholder {
   color: var(--text-muted);
 }
+
+.ansi-bold { font-weight: 700; }
+.ansi-uline { text-decoration: underline; }
+
+.ansi-30 { color: var(--text-muted); }
+.ansi-31 { color: var(--accent-red); }
+.ansi-32 { color: var(--accent-green); }
+.ansi-33 { color: var(--accent-yellow); }
+.ansi-34 { color: var(--accent); }
+.ansi-35 { color: var(--accent); }
+.ansi-36 { color: var(--accent); }
+.ansi-37 { color: var(--text-primary); }
+
+.ansi-90 { color: var(--text-muted); }
+.ansi-91 { color: var(--accent-red); }
+.ansi-92 { color: var(--accent-green); }
+.ansi-93 { color: var(--accent-yellow); }
+.ansi-94 { color: var(--accent); }
+.ansi-95 { color: var(--accent); }
+.ansi-96 { color: var(--accent); }
+.ansi-97 { color: var(--text-primary); }
 </style>
